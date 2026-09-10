@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Virtual environments
+.venv/
+venv/
+
+# Test and coverage caches
+.pytest_cache/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+.tox/
+
+# Type checker and linter caches
+.mypy_cache/
+.ruff_cache/
+
+# Editors and OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Local assistant config
+.claude/
+CLAUDE.md
+
+# Build scratch
+PUBLISH_BLOCKED.md
+BUILD_SETUP_NEXT_STEPS.md
+DRIFT_REPORT.md
+.spawn.*
+.builder_*
+.build_metadata*
+.stage_*
+_build_ctx.json
+mvp_plan.md
+mvp_plan.md.sha256.lock

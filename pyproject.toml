@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "unbury"
+version = "0.1.0"
+description = "One-command answer cards for finished coding agent sessions"
+readme = "README.md"
+requires-python = ">=3.12"
+license = "MIT"
+authors = [{ name = "SuperMarioYL" }]
+keywords = ["claude-code", "codex", "coding-agent", "cli", "terminal", "transcript"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Software Development",
+    "Topic :: Terminals",
+    "Topic :: Utilities",
+]
+dependencies = [
+    "rich>=13.7",
+    "typer>=0.12",
+]
+
+[project.scripts]
+unbury = "unbury.cli:app"
+
+[project.urls]
+Homepage = "https://github.com/SuperMarioYL/unbury"
+Repository = "https://github.com/SuperMarioYL/unbury"
+Issues = "https://github.com/SuperMarioYL/unbury/issues"
+
+[dependency-groups]
+dev = ["pytest>=8.0"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+namespaces = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
