@@ -44,5 +44,12 @@ dev = ["pytest>=8.0"]
 where = ["src"]
 namespaces = true
 
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "W"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]

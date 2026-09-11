@@ -241,7 +241,8 @@ def _message_turn(payload: dict, line_no: int, timestamp: datetime | None) -> Tu
     for block in payload.get("content") or []:
         if not isinstance(block, dict):
             continue
-        if block.get("type") in ("input_text", "output_text") and isinstance(block.get("text"), str):
+        btype = block.get("type")
+        if btype in ("input_text", "output_text") and isinstance(block.get("text"), str):
             texts.append(block["text"])
     text = "\n\n".join(part for part in texts if part).strip()
     if role == "user" and text.startswith(_NOISE_TEXT_PREFIXES):
