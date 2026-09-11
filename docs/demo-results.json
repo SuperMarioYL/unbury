@@ -1,0 +1,57 @@
+{
+  "what": "Reproducible record of the README demo: the commands, the real session they ran against, and what came out. README and demo GIF share these facts.",
+  "product": "unbury",
+  "version": "0.1.0",
+  "recorded": "2026-09-11",
+  "environment": {
+    "os": "macOS 15 (arm64)",
+    "python": "3.13",
+    "agents_with_local_sessions": ["claude", "codex"]
+  },
+  "demo_session": {
+    "description": "A real finished Claude Code session on this machine: adding node-affinity scheduling to a backfill Job in a Helm chart, 53 turns.",
+    "agent": "claude",
+    "session_id": "82ed5a79-44c6-445f-ac4c-abfb6e043780",
+    "transcript": "~/.claude/projects/<project>/82ed5a79-44c6-445f-ac4c-abfb6e043780.jsonl",
+    "transcript_lines": 166,
+    "transcript_bytes": 426350,
+    "turns": 53,
+    "evidence_rows_extracted": 29,
+    "evidence_breakdown": { "file": 2, "command": 17, "decision": 10 },
+    "conclusion_excerpt_first_line": "Restored and verified. Final state confirmed — the template diff is back to the intended affinity block, lint passes, and the test (with the equality assertion) passes.",
+    "note": "Session content belongs to its author; the demo card and GIF show it unmodified."
+  },
+  "commands": [
+    {
+      "cmd": "unbury list",
+      "cwd": "the session's project directory",
+      "result": "20 finished sessions for that directory (16 codex, 4 claude), newest first"
+    },
+    {
+      "cmd": "wc -lc <transcript>",
+      "result": "166 426350 — the whole answer is in there, as JSONL"
+    },
+    {
+      "cmd": "unbury --session 82ed5a79",
+      "result": "one-screen answer card: verbatim conclusion (transcript:164) plus evidence rows with path:line refs; 29 evidence rows total, the fullest rows shown on screen and the rest counted in the footer"
+    },
+    {
+      "cmd": "unbury --session 82ed5a79 --html",
+      "result": "same card plus unbury-answer.html written to the working directory: full transcript with #L<line> anchors; every card row deep-links to its turn"
+    }
+  ],
+  "gif": {
+    "path": "assets/demo-unbury-card.gif",
+    "dimensions": "1100x900",
+    "duration_seconds": 22.4,
+    "frames": 559,
+    "recorded_with": "vhs 0.11.0 via docs/demo.tape (GitHub Dark theme)",
+    "mode": "real sessions (UNBURY_DEMO_PROJECT pointed at the project directory above); the tape renders the bundled synthetic example sessions when no real sessions exist"
+  },
+  "limitations": [
+    "Extraction is heuristic, not model-backed: the conclusion is the final substantive assistant message, quoted verbatim; heuristic extraction is what keeps unbury zero-config and offline.",
+    "Agent log formats are undocumented and change without notice; parsers are fixture-tested per dialect and degrade gracefully (unparseable lines are counted, not fatal).",
+    "A Codex session counts as finished after its rollout file has been quiescent for five minutes; an in-flight session is never carded.",
+    "The card shows the rows that fit; the footer counts what was skipped and the HTML view always carries the full evidence table."
+  ]
+}
