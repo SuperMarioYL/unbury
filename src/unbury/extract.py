@@ -10,16 +10,19 @@ never re-summarized. Evidence rows come from what the session actually did:
   texts that state a conclusion before the final one
 
 Every row carries a ``path:line`` reference back into the session transcript.
+The card types themselves live in :mod:`unbury.model` and are re-exported
+here for callers that already import them from the extraction pipeline.
 """
 
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass, field
-from datetime import datetime
 from pathlib import Path
 
+from unbury.model import AnswerCard, Evidence, SessionRef
 from unbury.parsers import ParsedSession
+
+__all__ = ["AnswerCard", "Evidence", "SessionRef", "build_card"]
 
 FILE_EDIT_TOOLS = {"Write", "Edit", "MultiEdit", "NotebookEdit"}
 COMMAND_TOOLS = {"Bash"}
@@ -30,39 +33,6 @@ COMMAND_TOOLS = {"Bash"}
 _MIN_FINDING_CHARS = 120
 
 _LINK_RE = re.compile(r"\[([^\]]+)\]\([^)]*\)")
-
-
-@dataclass
-class SessionRef:
-    """Which finished session a card was built from."""
-
-    agent: str
-    path: Path
-    turns: int
-    title: str | None = None
-    cwd: str | None = None
-    started_at: datetime | None = None
-    ended_at: datetime | None = None
-
-
-@dataclass
-class Evidence:
-    """One provenance-linked row: something the session did, and the exact
-    transcript location it happened at."""
-
-    kind: str  # "file" | "command" | "decision"
-    summary: str
-    ref: tuple[Path, int]
-
-
-@dataclass
-class AnswerCard:
-    """A typed, provenance-linked conclusion over a finished session log."""
-
-    session: SessionRef
-    conclusion: str
-    conclusion_ref: tuple[Path, int] | None = None
-    evidence: list[Evidence] = field(default_factory=list)
 
 
 def build_card(session: ParsedSession) -> AnswerCard:
