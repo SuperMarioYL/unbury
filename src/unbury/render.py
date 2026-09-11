@@ -46,8 +46,7 @@ def print_card(card: AnswerCard, console: Console | None = None) -> None:
     """Print the answer card to the terminal."""
     if console is None:
         console = Console()
-        if console.width > MAX_CARD_WIDTH:
-            console.width = MAX_CARD_WIDTH
+        console.width = min(console.width, MAX_CARD_WIDTH)
     console.print(_card(card, console))
 
 
