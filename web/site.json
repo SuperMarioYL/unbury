@@ -1,0 +1,350 @@
+{
+  "schema": 3,
+  "name": "unbury",
+  "github": "https://github.com/SuperMarioYL/unbury",
+  "host": "unbury.lei6393.com",
+  "palette": "auto",
+  "lang": {
+    "primary": "en",
+    "toggle": true
+  },
+  "meta": {
+    "visual_profile": "neon-particle",
+    "demo_source": "https://github.com/SuperMarioYL/unbury/blob/main/docs/demo-results.json",
+    "content_version": "v0.1.0",
+    "implementation_version": "0.1.0"
+  },
+  "hero": {
+    "eyebrow": {
+      "zh": "开源 · MIT · 零配置 · 离线",
+      "en": "Open source · MIT · Zero config · Offline"
+    },
+    "headline": {
+      "zh": "答案就埋在会话里，\nunbury 一条命令挖出来",
+      "en": "The answer is in the transcript.\nunbury puts it on one screen."
+    },
+    "sub": {
+      "zh": "编码 agent 刚把 bug 修完，答案就被埋进上千行推理叙述与原始工具输出。unbury 直接读取已结束的 Claude Code 或 Codex 会话，渲染一张一屏读完的答案卡片，每条证据都能跳回转录原文——无需 API key、无需配置、完全离线。",
+      "en": "Your coding agent fixed the bug, then buried the answer under a thousand lines of reasoning and raw tool output. unbury reads the finished Claude Code or Codex session and renders a one-screen answer card with jump-links into the transcript evidence — no API key, no settings, fully offline."
+    },
+    "href": "#quickstart",
+    "cta": {
+      "zh": "开始使用",
+      "en": "Get started"
+    },
+    "ctaGithub": {
+      "zh": "在 GitHub 查看",
+      "en": "View on GitHub"
+    }
+  },
+  "scene": {
+    "kind": "neon-graph",
+    "fallback": "/assets/presentation/scene-dark.svg",
+    "fallbackLight": "/assets/presentation/scene-light.svg",
+    "caption": {
+      "zh": "上千行会话，收敛成一张答案卡片",
+      "en": "A thousand-line session converges into one answer card"
+    }
+  },
+  "advantages": [
+    {
+      "title": {
+        "zh": "逐字引用，不复述",
+        "en": "Verbatim, not re-summarized"
+      },
+      "body": {
+        "zh": "结论就是 agent 最后那条实质性回答，用启发式原样提取——不调模型、不需要 API key、完全离线，也就不存在复述走样。agent 当时说了什么，你就读到什么。",
+        "en": "The conclusion is the agent's final answer, extracted as-is by heuristics — no model call, no API key, works entirely offline, and no summary drift. What the agent actually said is what you read."
+      }
+    },
+    {
+      "title": {
+        "zh": "每条结论都链回证据",
+        "en": "Every claim links to its evidence"
+      },
+      "body": {
+        "zh": "改了哪些文件、跑了哪些命令、做了哪些判断——每条证据行末尾都是指向转录原文的 路径:行号；--html 再把每一行变成一次点击，直达并高亮它对应的那一轮。",
+        "en": "Files edited, commands run, decisions made — each evidence row ends in a path:line ref into the transcript. With --html, every row becomes a jump-link that lands on and highlights the exact turn it came from."
+      }
+    },
+    {
+      "title": {
+        "zh": "Claude Code 与 Codex，同一套界面",
+        "en": "Claude Code and Codex, one interface"
+      },
+      "body": {
+        "zh": "解析器把各家 JSONL 方言归一成统一的 turns，发现、提取和两套渲染器都保持 agent 无关。在项目目录里运行 unbury，无论会话来自哪家，都会自动找到最新一个已结束的会话。",
+        "en": "Parsers normalize each agent's JSONL dialect into shared turns, so discovery, extraction and both renderers stay agent-agnostic. Run unbury in the project directory and it auto-finds the newest finished session, whichever agent produced it."
+      }
+    },
+    {
+      "title": {
+        "zh": "零配置是产品本身",
+        "en": "Zero config by design"
+      },
+      "body": {
+        "zh": "没有 API key、没有配置文件、没有常驻进程、没有网络请求——unbury 只读取 Claude Code（~/.claude/projects/）和 Codex（~/.codex/sessions/）本来就写在磁盘上的会话日志，而且只读已结束的会话：永远不会碰你正在跑的那一个。",
+        "en": "No API key, no settings file, no daemon, no network — unbury only reads the session logs Claude Code (~/.claude/projects/) and Codex (~/.codex/sessions/) already write to disk. And it only reads finished sessions: never the one you are currently in."
+      }
+    }
+  ],
+  "story": {
+    "intro": {
+      "title": {
+        "zh": "活干完了，答案被埋了",
+        "en": "The work is done. The answer is buried."
+      },
+      "body": {
+        "zh": "跑完的编码 agent 会话是写给模型看的，不是写给你的：结论只是夹在工具调用之间的一句「没有类型」的话，上面压着上千行推理叙述与原始输出。在 unbury 之前，找回结论只有两条路：在终端里往回滚屏——几分钟的逐行辨认；或者重新问一遍 agent——为已经产出过的答案再付一次 token，复述还可能走样。提示词规则改变的是下一次会话的说法；内置摘要服务的是模型的上下文预算；转录查看器仍要你自己去找答案。unbury 把「找回」变成一条命令。",
+        "en": "A finished coding-agent session is written for the model, not for you: the conclusion is one untyped sentence floating between tool calls, under a thousand lines of reasoning narration and raw output. Until now your recovery options were the terminal scrollback — minutes of squinting — or re-asking the agent: duplicate tokens for an answer it already produced, and a summary that can drift from what it actually said. Prompt rules change how the next session talks; built-in summaries serve the model's context budget; transcript viewers still make you find the answer yourself. unbury makes recovery one command."
+      }
+    },
+    "sections": [
+      {
+        "title": {
+          "zh": "从会话日志到答案卡片，一趟跑完",
+          "en": "From session log to answer card in one pass"
+        },
+        "body": {
+          "zh": "单进程、四个顺序阶段、零网络。discover 选中当前目录最新一个已结束的会话（--session 可用 id、唯一前缀或文件路径指定，且不受当前目录限制）。parsers 把 claude / codex 各自的 JSONL 方言解析成统一的 turns。extract 提取结论与证据——文件、命令、判断——组装成 AnswerCard。render 打印一屏卡片；--html 额外写出 unbury-answer.html：完整转录、每一轮都有稳定锚点、卡片上每一行都深链到它对应的那一轮。",
+          "en": "One process, four sequential stages, no network. discover picks the newest finished session recorded for the current directory (--session overrides with a session id, a unique prefix or a transcript path, reaching across directories). parsers turn the claude or codex JSONL dialect into normalized turns. extract lifts the conclusion and the evidence — files, commands, decisions — into an AnswerCard. render prints the one-screen card; --html also writes unbury-answer.html: the full transcript with an anchor on every turn and every card row deep-linked to its own."
+        },
+        "image": {
+          "light": "/assets/presentation/workflow-light.svg",
+          "dark": "/assets/presentation/workflow-dark.svg",
+          "alt": {
+            "zh": "unbury 流水线：discover、parsers、extract、render 与带链接的 HTML 视图",
+            "en": "The unbury pipeline: discover, parsers, extract, render, and the linked HTML view"
+          },
+          "mobile": {
+            "light": "/assets/presentation/workflow-mobile-light.svg",
+            "dark": "/assets/presentation/workflow-mobile-dark.svg"
+          }
+        }
+      },
+      {
+        "title": {
+          "zh": "一个 CLI、四个阶段、一个带类型的结论",
+          "en": "One CLI, four stages, one typed conclusion"
+        },
+        "body": {
+          "zh": "核心原语是 AnswerCard——横跨一次已结束会话、带溯源链接的类型化结论：SessionRef { agent, path, turns }、Evidence { kind: file | command | decision, summary, ref: (path, line) }、AnswerCard { session, conclusion, evidence }。方言知识都在解析器里，提取层完全不用关心会话来自哪个 agent。两个值得知道的细节：Claude Code 会话在没有存活进程持有它时（按 pid 判断）算结束，Codex 的 rollout 文件静默满五分钟算结束；而现在的 Codex 会话里，文件修改只以 exec 工具调用入参里的 tools.apply_patch('…') 字符串形式存在，codex 解析器会解码这些字符串，把文件修改证据找回来。",
+          "en": "The core primitive is the AnswerCard — a typed, provenance-linked conclusion over a finished session: SessionRef { agent, path, turns }, Evidence { kind: file | command | decision, summary, ref: (path, line) }, AnswerCard { session, conclusion, evidence }. Parsers own the dialect knowledge, so extraction never knows which agent produced a session. Two details worth knowing: a Claude Code session counts as finished when no running process owns it (checked by pid), a Codex rollout after its file has been quiet for five minutes — and current Codex sessions record file edits only as tools.apply_patch('…') strings inside exec tool-call inputs, which the codex parser decodes to recover file-edit evidence."
+        },
+        "image": {
+          "light": "/assets/presentation/architecture-light.svg",
+          "dark": "/assets/presentation/architecture-dark.svg",
+          "alt": {
+            "zh": "架构：会话日志、parsers/claude 与 parsers/codex、extract，再到 render 与 htmlview",
+            "en": "Architecture: session logs, parsers/claude and parsers/codex, extract, then render and htmlview"
+          },
+          "mobile": {
+            "light": "/assets/presentation/architecture-mobile-light.svg",
+            "dark": "/assets/presentation/architecture-mobile-dark.svg"
+          }
+        }
+      },
+      {
+        "title": {
+          "zh": "今天能读什么",
+          "en": "What reads in today"
+        },
+        "body": {
+          "zh": "Claude Code 会话读取自 ~/.claude/projects/<project>/<id>.jsonl——含会话标题、工具调用，以及人工输入与系统注入消息的过滤；Codex rollout 读取自 ~/.codex/sessions/**/rollout-*.jsonl——文件修改从 exec 入参里的 apply_patch 字符串中恢复。两者走的是同一条解析缝：一个解析器就是一个把方言 JSONL 变成统一 turns 的模块（parse_session(path) -> ParsedSession），Astra、Gemini CLI、Cursor 的支持将来也落在这里——是路线图，不是已发布。Python 3.12+ 下用 uv 或 pipx 安装；仓库还自带两条合成示例会话，没有任何 agent 历史也能跑通。",
+          "en": "Claude Code sessions are read from ~/.claude/projects/<project>/<id>.jsonl — with session titles, tool calls, and human-vs-injected message filtering. Codex rollouts from ~/.codex/sessions/**/rollout-*.jsonl — with file edits recovered from apply_patch strings inside exec inputs. Both run through the same parser seam: a parser is one module that turns a dialect JSONL file into normalized turns (parse_session(path) -> ParsedSession), which is exactly where Astra, Gemini CLI and Cursor support will land — roadmap, not shipped. Install with uv or pipx on Python 3.12+, or try the two synthetic example sessions bundled in the repo, no agent history required."
+        },
+        "image": {
+          "light": "/assets/presentation/integrations-light.svg",
+          "dark": "/assets/presentation/integrations-dark.svg",
+          "alt": {
+            "zh": "今天能读什么：Claude Code 与 Codex 的会话日志、解析器接口、uv/pipx 安装与自带示例",
+            "en": "What reads in today: Claude Code and Codex session logs, the parser seam, uv/pipx install, and the bundled examples"
+          },
+          "mobile": {
+            "light": "/assets/presentation/integrations-mobile-light.svg",
+            "dark": "/assets/presentation/integrations-mobile-dark.svg"
+          }
+        }
+      }
+    ],
+    "details": [
+      {
+        "title": {
+          "zh": "命令与开关",
+          "en": "Commands and flags"
+        },
+        "body": {
+          "zh": "全部调优面就是一条命令加三个开关。--session 接受 unbury list 里的会话 id、唯一前缀或转录文件路径，而且不受当前目录限制——几周前跑完的会话仍然只差一个前缀。--agent 把发现范围收窄到 claude 或 codex（默认两者）。--html 在卡片之外写出 unbury-answer.html。",
+          "en": "The entire tuning surface is one command and three flags. --session accepts a session id from unbury list, a unique id prefix, or a transcript path — and it reaches across directories, so the sessions you finished weeks ago are still one prefix away. --agent narrows discovery to claude or codex (default: both). --html writes unbury-answer.html beside the card."
+        },
+        "code": "unbury\nunbury list\nunbury --session 82ed5a79\nunbury --agent claude\nunbury --session 82ed5a79 --html"
+      },
+      {
+        "title": {
+          "zh": "只读已结束的会话",
+          "en": "Finished, never live"
+        },
+        "body": {
+          "zh": "unbury 永远不会去卡片化你正在跑的会话。Claude Code 会话在没有存活进程持有它时（按 pid 判断）算结束；Codex 的 rollout 文件静默满五分钟、且不是子 agent 线程时算结束。解析不了的行只计数、不致命——各家日志格式没有文档、说变就变，解析器按方言用 fixture 回归测试。",
+          "en": "unbury never cards the session you are currently in. A Claude Code session counts as finished when no running process owns it (checked by pid); a Codex rollout after its file has been quiet for five minutes and it is not a subagent thread. Unparseable lines are counted and skipped, never fatal — agent log formats are undocumented and change without notice, and parsers are fixture-tested per dialect."
+        },
+        "code": "unbury --agent codex"
+      },
+      {
+        "title": {
+          "zh": "没有 agent 历史也能试",
+          "en": "Try it without agent history"
+        },
+        "body": {
+          "zh": "仓库自带两条小型合成会话——一条 Claude Code 方言、一条 Codex 方言——demo 录制脚本在没有 ~/.claude 或 ~/.codex 的机器上用的就是它们。把它们放进一个一次性 HOME，立刻就能看到卡片：",
+          "en": "The repo bundles two small synthetic sessions — one Claude Code dialect, one Codex — the same sessions the demo tape stages on machines with no ~/.claude or ~/.codex directories. Stage them into a throwaway HOME to see a card immediately:"
+        },
+        "code": "demo=$(mktemp -d)\nmkdir -p \"$demo/.claude/projects/-tmp-unbury-demo\" /tmp/unbury-demo\ncp examples/demo-session.jsonl \\\n   \"$demo/.claude/projects/-tmp-unbury-demo/82ed5a79-0000-4000-8000-000000000001.jsonl\"\ncd /tmp/unbury-demo && HOME=\"$demo\" unbury --session 82ed5a79"
+      }
+    ]
+  },
+  "demo": {
+    "title": {
+      "zh": "真实演示",
+      "en": "Recorded demo"
+    },
+    "note": {
+      "zh": "真实录制，不是示意图：以下命令跑在一个真实项目里已经结束的 Claude Code 会话上——53 轮、426 KB JSONL、macOS 15（arm64）、Python 3.13。命令与结果逐字复制自演示记录；仓库里还有 22 秒的 GIF 和渲染它的 vhs 录制脚本。",
+      "en": "A real recording, not a mock: the commands below ran against a real finished Claude Code session on a real project — 53 turns, 426 KB of JSONL, on macOS 15 (arm64) with Python 3.13. Commands and results are copied verbatim from the demo record; the repo also ships the 22-second GIF and the vhs tape that renders it."
+    },
+    "source": "https://github.com/SuperMarioYL/unbury/blob/main/docs/demo-results.json",
+    "steps": [
+      {
+        "label": {
+          "zh": "会话存量",
+          "en": "The backlog"
+        },
+        "body": {
+          "zh": "unbury list 列出这个目录下已结束的会话——两种 agent 一起、按时间倒序。",
+          "en": "unbury list shows the finished sessions recorded for that directory — both agents together, newest first."
+        },
+        "image": "/assets/presentation/demo-list-light.svg",
+        "imageDark": "/assets/presentation/demo-list-dark.svg",
+        "command": "unbury list",
+        "output": "20 finished sessions for that directory (16 codex, 4 claude), newest first"
+      },
+      {
+        "label": {
+          "zh": "被埋的答案",
+          "en": "The burial"
+        },
+        "body": {
+          "zh": "会话在磁盘上的原貌——答案就在这一堆 JSONL 里，只是不知道在哪一行。",
+          "en": "The transcript exactly as it exists on disk — the answer is in there, somewhere."
+        },
+        "image": "/assets/presentation/demo-raw-light.svg",
+        "imageDark": "/assets/presentation/demo-raw-dark.svg",
+        "command": "wc -lc <transcript>",
+        "output": "166 426350 — the whole answer is in there, as JSONL"
+      },
+      {
+        "label": {
+          "zh": "答案卡片",
+          "en": "The card"
+        },
+        "body": {
+          "zh": "一条命令、一屏：逐字引用的结论，加上带 路径:行号 引用的证据行。",
+          "en": "One command, one screen: the conclusion quoted verbatim, plus evidence rows with path:line refs into the JSONL."
+        },
+        "image": "/assets/presentation/demo-card-light.svg",
+        "imageDark": "/assets/presentation/demo-card-dark.svg",
+        "command": "unbury --session 82ed5a79",
+        "output": "one-screen answer card: verbatim conclusion (transcript:164) plus evidence rows with path:line refs; 29 evidence rows total, the fullest rows shown on screen and the rest counted in the footer"
+      },
+      {
+        "label": {
+          "zh": "跳转链接",
+          "en": "The jump-links"
+        },
+        "body": {
+          "zh": "同一张卡片，外加 unbury-answer.html：带 #L<line> 锚点的完整转录——点一行，落到那一行。",
+          "en": "The same card plus unbury-answer.html: the full transcript with #L<line> anchors — click a row, land on the line."
+        },
+        "image": "/assets/presentation/demo-html-light.svg",
+        "imageDark": "/assets/presentation/demo-html-dark.svg",
+        "command": "unbury --session 82ed5a79 --html",
+        "output": "same card plus unbury-answer.html written to the working directory: full transcript with #L<line> anchors; every card row deep-links to its turn"
+      }
+    ]
+  },
+  "quickstart": {
+    "title": {
+      "zh": "从安装到答案卡片",
+      "en": "From install to answer card"
+    },
+    "body": {
+      "zh": "一分钟内跑通，没有任何要配置的东西。需要 Python 3.12+；没有 API key、没有配置文件、没有常驻进程。连 agent 历史都不需要——仓库自带两条合成示例会话。",
+      "en": "Under a minute, nothing to configure. Requires Python 3.12+; no API key, no settings file, no daemon. No agent history either — the repo bundles two synthetic example sessions."
+    },
+    "steps": [
+      {
+        "title": {
+          "zh": "安装",
+          "en": "Install"
+        },
+        "code": "uv tool install git+https://github.com/SuperMarioYL/unbury   # or: pipx install git+https://github.com/SuperMarioYL/unbury"
+      },
+      {
+        "title": {
+          "zh": "挖出你的会话",
+          "en": "Unbury your session"
+        },
+        "code": "cd your-project   # where you ran the agent\nunbury          # the answer card for its newest finished session\nunbury --html   # same card, plus unbury-answer.html with jump-links"
+      },
+      {
+        "title": {
+          "zh": "翻翻存量会话",
+          "en": "Browse the backlog"
+        },
+        "code": "unbury list                  # finished sessions for this directory\nunbury --session 82ed5a79    # session id, unique prefix, or transcript path\nunbury --agent codex         # claude | codex; default: both"
+      }
+    ]
+  },
+  "limitations": [
+    {
+      "zh": "提取是启发式的，不靠模型——这正是 unbury 能零配置、离线使用的原因，也是结论逐字引用而不重写的原因。",
+      "en": "Extraction is heuristic, not model-backed — that is what keeps unbury zero-config and offline, and why the conclusion is quoted verbatim rather than rewritten."
+    },
+    {
+      "zh": "各家日志格式没有文档、说变就变。解析器按方言用 fixture 回归测试；解析不了的行只计数、不致命。",
+      "en": "Agent log formats are undocumented and change without notice. Parsers are fixture-tested per dialect, and unparseable lines are counted and skipped, never fatal."
+    },
+    {
+      "zh": "卡片展示放得下的行数，并注明还有多少行没显示；完整的证据表永远在 HTML 视图里。",
+      "en": "The card shows the rows that fit and says how many more exist; the full evidence table is always in the HTML view."
+    },
+    {
+      "zh": "v0.1 只读取 Claude Code 与 Codex 会话。Astra、Gemini CLI、Cursor 的解析器在路线图上——解析器接口已经有了，解析器还没有。",
+      "en": "v0.1 reads Claude Code and Codex sessions only. Astra, Gemini CLI and Cursor parsers are roadmap items — the parser interface is there, the parsers are not."
+    },
+    {
+      "zh": "没有 Web UI、云同步、实时挂接、流式输出或跨会话搜索：unbury 读取已结束的会话，打印卡片。",
+      "en": "No web UI, cloud sync, live attach, streaming, or cross-session search: unbury reads finished sessions and prints the card."
+    }
+  ],
+  "cta": {
+    "headline": {
+      "zh": "不用再滚屏，\n也不用再问一遍",
+      "en": "Stop scrolling.\nStop re-asking."
+    },
+    "sub": {
+      "zh": "免费开源（MIT）· 无 API key · 无配置",
+      "en": "Free and open source (MIT) · no API key · no config"
+    },
+    "button": {
+      "zh": "在 GitHub 上开始",
+      "en": "Get started on GitHub"
+    }
+  },
+  "footer": {
+    "tag": {
+      "zh": "一条命令，逐字结论，可点击的证据。",
+      "en": "One command. Verbatim conclusion. Evidence you can click."
+    }
+  }
+}

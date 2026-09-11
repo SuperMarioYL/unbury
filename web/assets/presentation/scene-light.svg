@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="700" viewBox="0 0 1000 700" data-palette="afe656-74e76a-f5f6ac-062843c69ff9" role="img" aria-labelledby="ub-sc-light-title ub-sc-light-desc"><title id="ub-sc-light-title">unbury hero scene</title><desc id="ub-sc-light-desc">Static still: a finished session's many lines converge into one neon answer card.</desc>
+<defs>
+<linearGradient id="ub-sc-light-brand" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#607e2f"/><stop offset="0.55" stop-color="#42823c"/><stop offset="1" stop-color="#767653"/></linearGradient>
+<radialGradient id="ub-sc-light-halo" cx="0.62" cy="0.36" r="0.85"><stop stop-color="#607e2f" stop-opacity="0.1"/><stop offset="1" stop-color="#fcfef9" stop-opacity="0"/></radialGradient>
+<marker id="ub-sc-light-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="m1 1 7 4-7 4" fill="none" stroke="#607e2f" stroke-width="1.5"/></marker>
+</defs>
+<style>text{font-family:Arial,'Helvetica Neue','Noto Sans',sans-serif}.ub-sc-light-mono{font-family:Menlo,Consolas,'Liberation Mono',monospace}</style>
+<rect width="1000" height="700" rx="14" fill="#fcfef9"/>
+<rect width="1000" height="700" rx="14" fill="url(#ub-sc-light-halo)"/>
+<pattern id="ub-sc-light-grid" width="44" height="44" patternUnits="userSpaceOnUse"><path d="M44 0H0V44" fill="none" stroke="#e6f7cb" stroke-opacity="0.5" stroke-width="0.6"/></pattern><rect width="1000" height="700" rx="14" fill="url(#ub-sc-light-grid)"/><circle cx="880" cy="640" r="2.2" fill="#66796a" fill-opacity="0.32"/>
+<circle cx="912" cy="600" r="4.4" fill="#66796a" fill-opacity="0.35"/>
+<circle cx="940" cy="655" r="2.2" fill="#66796a" fill-opacity="0.32"/>
+<circle cx="856" cy="610" r="3.3" fill="#66796a" fill-opacity="0.51"/>
+<circle cx="898" cy="566" r="4.4" fill="#66796a" fill-opacity="0.35"/>
+<circle cx="930" cy="606" r="3.9" fill="#66796a" fill-opacity="0.61"/>
+<circle cx="862" cy="570" r="4.4" fill="#66796a" fill-opacity="0.35"/>
+<circle cx="906" cy="690" r="3.3" fill="#66796a" fill-opacity="0.51"/>
+<circle cx="938" cy="672" r="3.3" fill="#66796a" fill-opacity="0.51"/>
+<circle cx="872" cy="652" r="2.2" fill="#66796a" fill-opacity="0.32"/>
+<circle cx="920" cy="540" r="2.2" fill="#66796a" fill-opacity="0.32"/>
+<circle cx="888" cy="520" r="2.8" fill="#66796a" fill-opacity="0.42"/>
+<circle cx="948" cy="560" r="2.8" fill="#66796a" fill-opacity="0.42"/>
+<circle cx="858" cy="530" r="2.8" fill="#66796a" fill-opacity="0.42"/>
+<circle cx="905" cy="486" r="3.9" fill="#66796a" fill-opacity="0.61"/>
+<circle cx="936" cy="508" r="2.8" fill="#66796a" fill-opacity="0.42"/>
+<circle cx="876" cy="470" r="3.3" fill="#66796a" fill-opacity="0.51"/>
+<circle cx="920" cy="442" r="2.8" fill="#66796a" fill-opacity="0.42"/>
+<circle cx="888" cy="412" r="3.3" fill="#66796a" fill-opacity="0.51"/>
+<circle cx="950" cy="470" r="2.2" fill="#66796a" fill-opacity="0.32"/>
+<circle cx="860" cy="432" r="2.8" fill="#66796a" fill-opacity="0.42"/>
+<circle cx="902" cy="376" r="3.3" fill="#66796a" fill-opacity="0.51"/>
+<circle cx="934" cy="398" r="3.3" fill="#66796a" fill-opacity="0.51"/>
+<circle cx="874" cy="356" r="2.8" fill="#66796a" fill-opacity="0.42"/>
+<circle cx="916" cy="330" r="3.3" fill="#66796a" fill-opacity="0.51"/>
+<circle cx="886" cy="306" r="2.2" fill="#66796a" fill-opacity="0.32"/>
+<circle cx="946" cy="352" r="3.9" fill="#66796a" fill-opacity="0.61"/>
+<circle cx="858" cy="288" r="2.2" fill="#66796a" fill-opacity="0.32"/>
+<path d="M 920 620 C 760 610, 650 520, 560 430 C 470 340, 430 260, 430 196" fill="none" stroke="#607e2f" stroke-opacity="0.35" stroke-width="1.6" stroke-dasharray="2 9"/>
+<circle cx="872" cy="600" r="3" fill="#607e2f" fill-opacity="0.8"/>
+<circle cx="760" cy="560" r="3" fill="#607e2f" fill-opacity="0.8"/>
+<circle cx="660" cy="496" r="3" fill="#607e2f" fill-opacity="0.8"/>
+<circle cx="580" cy="420" r="3" fill="#607e2f" fill-opacity="0.8"/>
+<circle cx="500" cy="330" r="3" fill="#607e2f" fill-opacity="0.8"/>
+<circle cx="448" cy="254" r="3" fill="#607e2f" fill-opacity="0.8"/>
+<circle cx="640" cy="500" r="2.6" fill="#42823c" fill-opacity="0.8"/>
+<circle cx="520" cy="360" r="2.6" fill="#42823c" fill-opacity="0.8"/>
+<rect x="150" y="96" width="330" height="200" rx="14" fill="#fbfef7" stroke="url(#ub-sc-light-brand)" stroke-width="2.4"/>
+<rect x="160" y="86" width="330" height="200" rx="14" fill="none" stroke="#607e2f" stroke-opacity="0.35" stroke-dasharray="3 6"/>
+<text x="315" y="150" fill="#1f2a1c" font-size="34" font-weight="700" text-anchor="middle" letter-spacing="1">unbury</text>
+<text x="315" y="176" fill="#66796a" font-size="12" text-anchor="middle" class="ub-sc-light-mono">one command · zero config · offline</text>
+<line x1="186" y1="196" x2="444" y2="196" stroke="#e6f7cb"/>
+<text x="186" y="222" fill="#607e2f" font-size="12.5" font-weight="700">conclusion — verbatim</text>
+<text x="186" y="244" fill="#66796a" font-size="11.5">files · commands · decisions</text>
+<text x="186" y="266" fill="#66796a" font-size="11.5" class="ub-sc-light-mono">every row → path:line</text>
+<g transform="translate(315 60)" stroke="#607e2f" stroke-width="2.2" fill="none" stroke-linecap="round"><path d="M-11 0 H-3 M3 0 H11 M0 -11 V-3 M0 3 V11"/><circle cx="0" cy="0" r="3.4" fill="#607e2f" stroke="none"/></g>
+<text x="890" y="694" fill="#66796a" font-size="11.5" text-anchor="middle" class="ub-sc-light-mono">finished session (.jsonl)</text>
+<text x="566" y="456" fill="#66796a" font-size="11.5" class="ub-sc-light-mono">heuristic extraction</text>
+<text x="315" y="330" fill="#607e2f" font-size="12" text-anchor="middle" font-weight="700">answer card</text></svg>

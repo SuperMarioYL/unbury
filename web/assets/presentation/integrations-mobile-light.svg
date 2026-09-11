@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="862" viewBox="0 0 400 862" data-palette="afe656-74e76a-f5f6ac-062843c69ff9" role="img" aria-labelledby="ub-inm-light-title ub-inm-light-desc"><title id="ub-inm-light-title">unbury integrations (mobile)</title><desc id="ub-inm-light-desc">What reads in today, as a vertical composition.</desc>
+<defs>
+<linearGradient id="ub-inm-light-brand" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#607e2f"/><stop offset="0.55" stop-color="#42823c"/><stop offset="1" stop-color="#767653"/></linearGradient>
+<radialGradient id="ub-inm-light-halo" cx="0.62" cy="0.36" r="0.85"><stop stop-color="#607e2f" stop-opacity="0.1"/><stop offset="1" stop-color="#fcfef9" stop-opacity="0"/></radialGradient>
+<marker id="ub-inm-light-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="m1 1 7 4-7 4" fill="none" stroke="#607e2f" stroke-width="1.5"/></marker>
+</defs>
+<style>text{font-family:Arial,'Helvetica Neue','Noto Sans',sans-serif}.ub-inm-light-mono{font-family:Menlo,Consolas,'Liberation Mono',monospace}.ub-inm-light-flow{animation:ub-inm-light-flow 5.5s linear infinite}@keyframes ub-inm-light-flow{to{stroke-dashoffset:-160}}.ub-inm-light-pulse{animation:ub-inm-light-pulse 4.2s ease-in-out infinite}@keyframes ub-inm-light-pulse{0%,100%{opacity:.4}50%{opacity:1}}@media (prefers-reduced-motion: reduce){*{animation:none !important;transform:none !important}}</style>
+<rect width="400" height="862" rx="14" fill="#fcfef9"/>
+<rect width="400" height="862" rx="14" fill="url(#ub-inm-light-halo)"/>
+<pattern id="ub-inm-light-grid" width="44" height="44" patternUnits="userSpaceOnUse"><path d="M44 0H0V44" fill="none" stroke="#e6f7cb" stroke-opacity="0.5" stroke-width="0.6"/></pattern><rect width="400" height="862" rx="14" fill="url(#ub-inm-light-grid)"/><text x="28" y="44" fill="#66796a" font-size="12">INTEGRATION</text>
+<text x="28" y="74" fill="#1f2a1c" font-size="18" font-weight="700">What reads in today</text>
+<circle cx="200" cy="150" r="46" fill="#fbfef7" stroke="url(#ub-inm-light-brand)" stroke-width="2.2"/>
+<text x="200" y="152" fill="#1f2a1c" font-size="17" font-weight="700" text-anchor="middle">unbury</text>
+<text x="200" y="174" fill="#66796a" font-size="11.5" text-anchor="middle" class="ub-inm-light-mono">one command · zero config</text>
+<path d="M200 200 V218" fill="none" stroke="#607e2f" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="3 7" marker-end="url(#ub-inm-light-arrow)" class="ub-inm-light-flow"/>
+<rect x="28" y="226" width="344" height="88" rx="10" fill="#fbfef7" stroke="#607e2f" stroke-width="1.6"/><text x="44" y="252" fill="#607e2f" font-size="13" font-weight="700">Claude Code sessions</text><text x="44" y="273" fill="#66796a" font-size="11" class="ub-inm-light-mono">~/.claude/projects/&lt;id&gt;.jsonl</text><text x="44" y="292" fill="#66796a" font-size="11" class="ub-inm-light-mono">titles · tool calls · filtering</text>
+<rect x="28" y="340" width="344" height="88" rx="10" fill="#fbfef7" stroke="#607e2f" stroke-width="1.6"/><text x="44" y="366" fill="#607e2f" font-size="13" font-weight="700">Codex rollouts</text><text x="44" y="387" fill="#66796a" font-size="11" class="ub-inm-light-mono">~/.codex/sessions/rollout-*.jsonl</text><text x="44" y="406" fill="#66796a" font-size="11" class="ub-inm-light-mono">apply_patch strings decoded</text>
+<path d="M200 428 V446" fill="none" stroke="#607e2f" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="3 7" marker-end="url(#ub-inm-light-arrow)" class="ub-inm-light-flow"/>
+<rect x="28" y="454" width="344" height="72" rx="10" fill="#fbfef7" stroke="#e6f7cb" stroke-width="1"/><text x="44" y="480" fill="#1f2a1c" font-size="13" font-weight="600">terminal card</text><text x="44" y="501" fill="#66796a" font-size="11" class="ub-inm-light-mono">conclusion + evidence rows, one screen</text>
+<rect x="28" y="552" width="344" height="72" rx="10" fill="#fbfef7" stroke="#e6f7cb" stroke-width="1"/><text x="44" y="578" fill="#1f2a1c" font-size="13" font-weight="600">unbury-answer.html</text><text x="44" y="599" fill="#66796a" font-size="11" class="ub-inm-light-mono">#L anchors · click a row, land on the line</text>
+<path d="M200 624 V642" fill="none" stroke="#607e2f" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="3 7" marker-end="url(#ub-inm-light-arrow)" class="ub-inm-light-flow"/>
+<rect x="28" y="650" width="344" height="88" rx="10" fill="#fbfef7" stroke="#e6f7cb" stroke-width="1"/><text x="44" y="676" fill="#1f2a1c" font-size="13" font-weight="600">install</text><text x="44" y="697" fill="#66796a" font-size="11" class="ub-inm-light-mono">uv tool install · pipx · Python 3.12+</text><text x="44" y="716" fill="#66796a" font-size="11" class="ub-inm-light-mono">examples/ — two synthetic sessions</text>
+<rect x="28" y="764" width="344" height="72" rx="10" fill="#f9fdf3" stroke="#e6f7cb" stroke-dasharray="4 4"/>
+<text x="44" y="788" fill="#1f2a1c" font-size="13" font-weight="600">parser seam</text>
+<text x="44" y="808" fill="#66796a" font-size="11.5" class="ub-inm-light-mono">parse_session(path) → ParsedSession</text>
+<text x="44" y="826" fill="#66796a" font-size="10.5">roadmap: Astra · Gemini CLI · Cursor</text></svg>

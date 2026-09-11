@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="300" viewBox="0 0 760 300" data-palette="afe656-74e76a-f5f6ac-062843c69ff9" role="img" aria-labelledby="ub-d1-light-title ub-d1-light-desc"><title id="ub-d1-light-title">unbury demo — step 1 of 4</title><desc id="ub-d1-light-desc">Recorded step 1: unbury list over the project directory.</desc>
+<defs>
+<linearGradient id="ub-d1-light-brand" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#607e2f"/><stop offset="0.55" stop-color="#42823c"/><stop offset="1" stop-color="#767653"/></linearGradient>
+<radialGradient id="ub-d1-light-halo" cx="0.62" cy="0.36" r="0.85"><stop stop-color="#607e2f" stop-opacity="0.1"/><stop offset="1" stop-color="#fcfef9" stop-opacity="0"/></radialGradient>
+<marker id="ub-d1-light-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="m1 1 7 4-7 4" fill="none" stroke="#607e2f" stroke-width="1.5"/></marker>
+</defs>
+<style>text{font-family:Arial,'Helvetica Neue','Noto Sans',sans-serif}.ub-d1-light-mono{font-family:Menlo,Consolas,'Liberation Mono',monospace}</style>
+<rect width="760" height="300" rx="14" fill="#fcfef9"/>
+<rect width="760" height="300" rx="14" fill="url(#ub-d1-light-halo)"/>
+<pattern id="ub-d1-light-grid" width="44" height="44" patternUnits="userSpaceOnUse"><path d="M44 0H0V44" fill="none" stroke="#e6f7cb" stroke-opacity="0.5" stroke-width="0.6"/></pattern><rect width="760" height="300" rx="14" fill="url(#ub-d1-light-grid)"/><rect x="24" y="20" width="712" height="260" rx="12" fill="#f9fdf3" stroke="#e6f7cb"/>
+<circle cx="46" cy="40" r="5" fill="#e6f7cb"/><circle cx="64" cy="40" r="5" fill="#e6f7cb"/><circle cx="82" cy="40" r="5" fill="#e6f7cb"/>
+<text x="380" y="44" fill="#66796a" font-size="11.5" text-anchor="middle" class="ub-d1-light-mono">unbury · step 1 of 4</text>
+<line x1="24" y1="58" x2="736" y2="58" stroke="#e6f7cb"/>
+<text x="44" y="86" fill="#607e2f" font-size="12.5" font-weight="700" class="ub-d1-light-mono">$ unbury list</text>
+<text x="44" y="114" fill="#1f2a1c" font-size="12.5" class="ub-d1-light-mono">20 finished sessions for that directory (16 codex, 4 claude), newest first</text>
+<g opacity="0.85"><rect x="44" y="168" width="120" height="22" rx="11" fill="#f9fdf3" stroke="#607e2f"/><text x="56" y="183" fill="#607e2f" font-size="11" class="ub-d1-light-mono">16 codex</text></g>
+<g opacity="0.85"><rect x="176" y="168" width="120" height="22" rx="11" fill="#f9fdf3" stroke="#607e2f"/><text x="188" y="183" fill="#607e2f" font-size="11" class="ub-d1-light-mono">4 claude</text></g>
+<g opacity="0.85"><rect x="308" y="168" width="140" height="22" rx="11" fill="#f9fdf3" stroke="#e6f7cb"/><text x="320" y="183" fill="#66796a" font-size="11" class="ub-d1-light-mono">newest first</text></g>
+<line x1="44" y1="216" x2="716" y2="216" stroke="#e6f7cb"/>
+<text x="44" y="242" fill="#66796a" font-size="11.5" class="ub-d1-light-mono">the backlog: every finished session recorded for this</text>
+<text x="44" y="262" fill="#66796a" font-size="11.5" class="ub-d1-light-mono">directory, both agents together --session picks one</text></svg>

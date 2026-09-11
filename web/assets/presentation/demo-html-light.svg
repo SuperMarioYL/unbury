@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="300" viewBox="0 0 760 300" data-palette="afe656-74e76a-f5f6ac-062843c69ff9" role="img" aria-labelledby="ub-d4-light-title ub-d4-light-desc"><title id="ub-d4-light-title">unbury demo — step 4 of 4</title><desc id="ub-d4-light-desc">Recorded step 4: the linked transcript view with anchors and jump-links.</desc>
+<defs>
+<linearGradient id="ub-d4-light-brand" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#607e2f"/><stop offset="0.55" stop-color="#42823c"/><stop offset="1" stop-color="#767653"/></linearGradient>
+<radialGradient id="ub-d4-light-halo" cx="0.62" cy="0.36" r="0.85"><stop stop-color="#607e2f" stop-opacity="0.1"/><stop offset="1" stop-color="#fcfef9" stop-opacity="0"/></radialGradient>
+<marker id="ub-d4-light-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="m1 1 7 4-7 4" fill="none" stroke="#607e2f" stroke-width="1.5"/></marker>
+</defs>
+<style>text{font-family:Arial,'Helvetica Neue','Noto Sans',sans-serif}.ub-d4-light-mono{font-family:Menlo,Consolas,'Liberation Mono',monospace}</style>
+<rect width="760" height="300" rx="14" fill="#fcfef9"/>
+<rect width="760" height="300" rx="14" fill="url(#ub-d4-light-halo)"/>
+<pattern id="ub-d4-light-grid" width="44" height="44" patternUnits="userSpaceOnUse"><path d="M44 0H0V44" fill="none" stroke="#e6f7cb" stroke-opacity="0.5" stroke-width="0.6"/></pattern><rect width="760" height="300" rx="14" fill="url(#ub-d4-light-grid)"/><rect x="24" y="20" width="712" height="260" rx="12" fill="#f9fdf3" stroke="#e6f7cb"/>
+<circle cx="46" cy="40" r="5" fill="#e6f7cb"/><circle cx="64" cy="40" r="5" fill="#e6f7cb"/><circle cx="82" cy="40" r="5" fill="#e6f7cb"/>
+<text x="380" y="44" fill="#66796a" font-size="11.5" text-anchor="middle" class="ub-d4-light-mono">unbury · step 4 of 4</text>
+<line x1="24" y1="58" x2="736" y2="58" stroke="#e6f7cb"/>
+<text x="44" y="86" fill="#607e2f" font-size="12.5" font-weight="700" class="ub-d4-light-mono">$ unbury --session 82ed5a79 --html</text>
+<text x="44" y="112" fill="#1f2a1c" font-size="11.5" class="ub-d4-light-mono">same card plus unbury-answer.html written to the working directory: full transcript</text>
+<text x="44" y="131" fill="#1f2a1c" font-size="11.5" class="ub-d4-light-mono">with #L&lt;line&gt; anchors; every card row deep-links to its turn</text>
+<rect x="44" y="188" width="300" height="34" rx="8" fill="#fbfef7" stroke="#e6f7cb"/>
+<text x="58" y="209" fill="#66796a" font-size="11.5" class="ub-d4-light-mono">card row · decision  →  #L164</text>
+<path d="M344 205 H420" fill="none" stroke="#607e2f" stroke-width="1.6" stroke-dasharray="3 7" marker-end="url(#ub-d4-light-arrow)"/>
+<rect x="432" y="188" width="284" height="34" rx="8" fill="#f9fdf3" stroke="#607e2f" stroke-width="1.4"/>
+<text x="446" y="209" fill="#607e2f" font-size="11.5" class="ub-d4-light-mono">turn 164 — highlighted</text>
+<line x1="44" y1="246" x2="716" y2="246" stroke="#e6f7cb"/>
+<text x="44" y="268" fill="#66796a" font-size="11.5" class="ub-d4-light-mono">click a row, land on the line — the full evidence table always in the HTML view</text></svg>

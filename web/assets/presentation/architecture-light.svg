@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="540" viewBox="0 0 1000 540" data-palette="afe656-74e76a-f5f6ac-062843c69ff9" role="img" aria-labelledby="ub-ar-light-title ub-ar-light-desc"><title id="ub-ar-light-title">unbury architecture</title><desc id="ub-ar-light-desc">Session logs, the claude and codex parsers, extraction into the AnswerCard, then the terminal card and the linked HTML view.</desc>
+<defs>
+<linearGradient id="ub-ar-light-brand" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#607e2f"/><stop offset="0.55" stop-color="#42823c"/><stop offset="1" stop-color="#767653"/></linearGradient>
+<radialGradient id="ub-ar-light-halo" cx="0.62" cy="0.36" r="0.85"><stop stop-color="#607e2f" stop-opacity="0.1"/><stop offset="1" stop-color="#fcfef9" stop-opacity="0"/></radialGradient>
+<marker id="ub-ar-light-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="m1 1 7 4-7 4" fill="none" stroke="#607e2f" stroke-width="1.5"/></marker>
+</defs>
+<style>text{font-family:Arial,'Helvetica Neue','Noto Sans',sans-serif}.ub-ar-light-mono{font-family:Menlo,Consolas,'Liberation Mono',monospace}.ub-ar-light-flow{animation:ub-ar-light-flow 5.5s linear infinite}@keyframes ub-ar-light-flow{to{stroke-dashoffset:-160}}.ub-ar-light-pulse{animation:ub-ar-light-pulse 4.2s ease-in-out infinite}@keyframes ub-ar-light-pulse{0%,100%{opacity:.4}50%{opacity:1}}@media (prefers-reduced-motion: reduce){*{animation:none !important;transform:none !important}}</style>
+<rect width="1000" height="540" rx="14" fill="#fcfef9"/>
+<rect width="1000" height="540" rx="14" fill="url(#ub-ar-light-halo)"/>
+<pattern id="ub-ar-light-grid" width="44" height="44" patternUnits="userSpaceOnUse"><path d="M44 0H0V44" fill="none" stroke="#e6f7cb" stroke-opacity="0.5" stroke-width="0.6"/></pattern><rect width="1000" height="540" rx="14" fill="url(#ub-ar-light-grid)"/><text x="36" y="42" fill="#66796a" font-size="12" letter-spacing="2">ARCHITECTURE</text>
+<text x="36" y="72" fill="#1f2a1c" font-size="19" font-weight="700">One CLI, four stages, one typed conclusion</text>
+<rect x="36" y="100" width="440" height="120" rx="10" fill="#f9fdf3" stroke="#e6f7cb" stroke-dasharray="4 4"/>
+<text x="52" y="122" fill="#66796a" font-size="11.5" class="ub-ar-light-mono">session logs — agent-written, read-only</text>
+<text x="52" y="146" fill="#66796a" font-size="11.5" class="ub-ar-light-mono">~/.claude/projects/&lt;project&gt;/&lt;id&gt;.jsonl</text>
+<text x="52" y="164" fill="#66796a" font-size="10.5">finished = no live process owns it (pid)</text>
+<text x="52" y="188" fill="#66796a" font-size="11.5" class="ub-ar-light-mono">~/.codex/sessions/**/rollout-*.jsonl</text>
+<text x="52" y="206" fill="#66796a" font-size="10.5">finished = file quiet ≥ 5 min · not a subagent</text>
+<path d="M256 220 V288" fill="none" stroke="#607e2f" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="3 7" marker-end="url(#ub-ar-light-arrow)" class="ub-ar-light-flow"/>
+<rect x="36" y="296" width="440" height="104" rx="10" fill="#fbfef7" stroke="#e6f7cb"/>
+<text x="52" y="322" fill="#1f2a1c" font-size="13.5" font-weight="600">parsers/ — dialect knowledge lives here</text>
+<rect x="52" y="334" width="196" height="56" rx="10" fill="#fbfef7" stroke="#e6f7cb" stroke-width="1"/><text x="68" y="360" fill="#1f2a1c" font-size="12.5" font-weight="600">claude.py</text><text x="68" y="381" fill="#66796a" font-size="11" class="ub-ar-light-mono">titles · tool calls</text>
+<rect x="264" y="334" width="196" height="56" rx="10" fill="#fbfef7" stroke="#e6f7cb" stroke-width="1"/><text x="280" y="360" fill="#1f2a1c" font-size="12.5" font-weight="600">codex.py</text><text x="280" y="381" fill="#66796a" font-size="11" class="ub-ar-light-mono">apply_patch decoded</text>
+<path d="M256 400 V428" fill="none" stroke="#607e2f" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="3 7" marker-end="url(#ub-ar-light-arrow)" class="ub-ar-light-flow"/>
+<text x="272" y="424" fill="#66796a" font-size="10.5" class="ub-ar-light-mono">shared [Turn]</text>
+<rect x="36" y="436" width="440" height="74" rx="10" fill="#fbfef7" stroke="#e6f7cb" stroke-width="1"/><text x="52" y="462" fill="#1f2a1c" font-size="14" font-weight="600">extract.py — heuristics, not a model</text><text x="52" y="483" fill="#66796a" font-size="11" class="ub-ar-light-mono">final substantive answer, verbatim</text><text x="52" y="502" fill="#66796a" font-size="11" class="ub-ar-light-mono">file · command · decision evidence</text>
+<text x="36" y="534" fill="#66796a" font-size="10.5" class="ub-ar-light-mono">single process · no server · no daemon</text>
+<rect x="540" y="100" width="424" height="190" rx="10" fill="#fbfef7" stroke="#607e2f" stroke-width="1.6"/><text x="556" y="126" fill="#607e2f" font-size="13.5" font-weight="700">AnswerCard — the core primitive</text><text x="556" y="147" fill="#66796a" font-size="11" class="ub-ar-light-mono">SessionRef { agent, path, turns }</text><text x="556" y="166" fill="#66796a" font-size="11" class="ub-ar-light-mono">Evidence { kind: file | command | decision,</text><text x="556" y="185" fill="#66796a" font-size="11" class="ub-ar-light-mono">           summary, ref: (path, line) }</text><text x="556" y="204" fill="#66796a" font-size="11" class="ub-ar-light-mono">AnswerCard { session, conclusion,</text><text x="556" y="223" fill="#66796a" font-size="11" class="ub-ar-light-mono">             evidence }  · ordered, deduped</text>
+<text x="556" y="276" fill="#607e2f" font-size="11" class="ub-ar-light-mono">conclusion quoted verbatim — no model call</text>
+<path d="M476 473 C 520 473, 540 360, 556 296" fill="none" stroke="#607e2f" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="3 7" marker-end="url(#ub-ar-light-arrow)" class="ub-ar-light-flow"/>
+<path d="M640 290 V330" fill="none" stroke="#607e2f" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="3 7" marker-end="url(#ub-ar-light-arrow)" class="ub-ar-light-flow"/>
+<path d="M864 290 V330" fill="none" stroke="#607e2f" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="3 7" marker-end="url(#ub-ar-light-arrow)" class="ub-ar-light-flow"/>
+<rect x="540" y="338" width="200" height="84" rx="10" fill="#fbfef7" stroke="#607e2f" stroke-width="1.6"/><text x="556" y="364" fill="#607e2f" font-size="14" font-weight="700">render.py</text><text x="556" y="385" fill="#66796a" font-size="11" class="ub-ar-light-mono">one-screen</text><text x="556" y="404" fill="#66796a" font-size="11" class="ub-ar-light-mono">terminal card</text>
+<rect x="764" y="338" width="200" height="84" rx="10" fill="#fbfef7" stroke="#607e2f" stroke-width="1.6"/><text x="780" y="364" fill="#607e2f" font-size="14" font-weight="700">htmlview.py</text><text x="780" y="385" fill="#66796a" font-size="11" class="ub-ar-light-mono">linked transcript</text><text x="780" y="404" fill="#66796a" font-size="11" class="ub-ar-light-mono">#L anchors</text>
+<line x1="540" y1="452" x2="964" y2="452" stroke="#e6f7cb"/>
+<text x="540" y="478" fill="#66796a" font-size="11">parsers own the dialect — extraction and</text>
+<text x="540" y="498" fill="#66796a" font-size="11">both renderers stay agent-agnostic</text></svg>

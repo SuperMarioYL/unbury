@@ -1,0 +1,38 @@
+{
+  "mode": "auto",
+  "id": "afe656-74e76a-f5f6ac-062843c69ff9",
+  "identity": "https://github.com/supermarioyl/unbury",
+  "primary": "#afe656",
+  "secondary": "#74e76a",
+  "highlight": "#f5f6ac",
+  "dark": {
+    "bg": "#080c0d",
+    "panel": "#101717",
+    "code": "#101713",
+    "ink": "#fdfdee",
+    "muted": "#a7b9a8",
+    "line": "#2d3c1d",
+    "primary": "#afe656",
+    "secondary": "#74e76a",
+    "highlight": "#f5f6ac",
+    "accent": "#afe656",
+    "buttonStart": "#628030",
+    "buttonEnd": "#43853d",
+    "buttonText": "#ffffff"
+  },
+  "light": {
+    "bg": "#fcfef9",
+    "panel": "#fbfef7",
+    "code": "#f9fdf3",
+    "ink": "#1f2a1c",
+    "muted": "#66796a",
+    "line": "#e6f7cb",
+    "primary": "#607e2f",
+    "secondary": "#42823c",
+    "highlight": "#767653",
+    "accent": "#607e2f",
+    "buttonStart": "#628030",
+    "buttonEnd": "#43853d",
+    "buttonText": "#ffffff"
+  }
+}
