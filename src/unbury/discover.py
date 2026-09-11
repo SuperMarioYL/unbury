@@ -109,6 +109,11 @@ def latest_finished(
     return None
 
 
+def open_session(info: SessionInfo) -> ParsedSession:
+    """Parse a listed session into normalized turns, ready for extraction."""
+    return _PARSERS[info.agent](info.path)
+
+
 def select_session(
     ref: str,
     *,

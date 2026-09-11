@@ -19,9 +19,7 @@ from rich.rule import Rule
 from rich.table import Table
 from rich.text import Text
 
-from unbury import extract
-from unbury.extract import AnswerCard, Evidence
-from unbury.parsers import claude
+from unbury.model import AnswerCard, Evidence
 
 MAX_CARD_WIDTH = 120
 CONCLUSION_MAX_LINES = 15
@@ -50,20 +48,6 @@ def print_card(card: AnswerCard, console: Console | None = None) -> None:
     console.print(_card(card, console))
 
 
-def main(cwd: Path | str | None = None) -> int:
-    """Print the answer card for the latest finished Claude Code session."""
-    session_path = claude.latest_finished_session(cwd)
-    if session_path is None:
-        project = Path(cwd or Path.cwd()).resolve()
-        Console(stderr=True).print(
-            f"no finished Claude Code sessions found for {project}", style="red"
-        )
-        return 1
-    card = extract.build_card(claude.parse_session(session_path))
-    print_card(card)
-    return 0
-
-
 def _card(card: AnswerCard, console: Console) -> RenderableType:
     return Panel(
         _card_body(card, console),
@@ -76,8 +60,8 @@ def _card(card: AnswerCard, console: Console) -> RenderableType:
 
 def _card_body(card: AnswerCard, console: Console) -> RenderableType:
     conclusion_lines = card.conclusion.splitlines() or [""]
-    shown_conclusion_lines = min(len(conclusion_lines), CONCLUSION_MAX_LINES)
-    budget = max(4, min(MAX_EVIDENCE_ROWS, console.size.height - _CHROME_LINES - shown_conclusion_lines))
+    shown = min(len(conclusion_lines), CONCLUSION_MAX_LINES)
+    budget = max(4, min(MAX_EVIDENCE_ROWS, console.size.height - _CHROME_LINES - shown))
     rows = _select_evidence(card.evidence, budget)
 
     parts: list[RenderableType] = list(_header(card, console.width - 6))
@@ -100,10 +84,11 @@ def _header(card: AnswerCard, width: int) -> list[RenderableType]:
         meta.append(
             start.strftime("%b %d %H:%M") + " → " + end.strftime("%b %d %H:%M")
         )
+    transcript_line = _fit(_home_shortened(str(card.session.path)), width - 11)
     return [
         title,
         Text(" · ".join(meta), style="dim"),
-        Text(f"transcript {_fit(_home_shortened(str(card.session.path)), width - 11)}", style="dim"),
+        Text(f"transcript {transcript_line}", style="dim"),
     ]
 
 
@@ -188,7 +173,3 @@ def _fit(text: str, width: int) -> str:
     if len(text) <= width:
         return text
     return "…" + text[-(width - 1):]
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
