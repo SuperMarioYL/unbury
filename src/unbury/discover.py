@@ -18,7 +18,7 @@ from __future__ import annotations
 import heapq
 from collections.abc import Iterator, Sequence
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import UTC, datetime
 from pathlib import Path
 
 from unbury.parsers import ParsedSession, claude, codex
@@ -175,7 +175,7 @@ def _claude_candidates(cwd: Path | str | None, dirs: SessionDirs) -> Iterator[_C
             agent="claude",
             path=path,
             session_id=path.stem,
-            modified_at=datetime.fromtimestamp(mtime),
+            modified_at=datetime.fromtimestamp(mtime, tz=UTC),
             project_hint=project_name,
         )
 

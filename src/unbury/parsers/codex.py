@@ -50,7 +50,7 @@ import re
 import time
 from collections.abc import Iterator
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import UTC, datetime
 from pathlib import Path
 
 from unbury.parsers import ParsedSession, ToolCall, Turn
@@ -120,7 +120,8 @@ def session_files(*, sessions_dir: Path | None = None) -> list[tuple[datetime, P
     files = []
     for path in root.glob(f"*/*/*/{_ROLLOUT_GLOB}"):
         if path.is_file():
-            files.append((datetime.fromtimestamp(path.stat().st_mtime), path))
+            modified_at = datetime.fromtimestamp(path.stat().st_mtime, tz=UTC)
+            files.append((modified_at, path))
     files.sort(key=lambda entry: entry[0], reverse=True)
     return files
 
