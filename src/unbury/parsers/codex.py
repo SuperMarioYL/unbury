@@ -9,8 +9,7 @@ Layout on disk (verified against real Codex CLI / Desktop sessions):
   "subagent"``) write their own rollout files and are not user sessions, so
   discovery skips them. Codex keeps no liveness registry (its
   ``thread-writer-locks`` are never cleaned up), so a session counts as
-  finished once its file has been quiescent for ``FINISHED_GRACE_SECONDS`` —
-  an active turn writes records continuously.
+  finished once its file has been quiescent for ``FINISHED_GRACE_SECONDS``.
 
 Record schema: every line is ``{"timestamp", "ordinal", "type", "payload"}``.
 ``response_item`` records are the model transcript — everything a card needs:
@@ -58,8 +57,10 @@ from unbury.parsers import ParsedSession, ToolCall, Turn
 
 SESSIONS_DIR = Path.home() / ".codex" / "sessions"
 
-# No writes for this many seconds means no turn is running: active turns
-# emit token-count records continuously.
+# A rollout file untouched for this many seconds is treated as finished.
+# Active turns write records frequently but can pause for minutes while a
+# long command runs (gaps up to ~5 minutes observed in real sessions), so
+# the grace must cover those pauses to avoid carding a session mid-turn.
 FINISHED_GRACE_SECONDS = 300
 
 _ROLLOUT_GLOB = "rollout-*.jsonl"
