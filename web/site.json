@@ -106,8 +106,8 @@
           "en": "From session log to answer card in one pass"
         },
         "body": {
-          "zh": "单进程、四个顺序阶段、零网络。discover 选中当前目录最新一个已结束的会话（--session 可用 id、唯一前缀或文件路径指定，且不受当前目录限制）。parsers 把 claude / codex 各自的 JSONL 方言解析成统一的 turns。extract 提取结论与证据——文件、命令、判断——组装成 AnswerCard。render 打印一屏卡片；--html 额外写出 unbury-answer.html：完整转录、每一轮都有稳定锚点、卡片上每一行都深链到它对应的那一轮。",
-          "en": "One process, four sequential stages, no network. discover picks the newest finished session recorded for the current directory (--session overrides with a session id, a unique prefix or a transcript path, reaching across directories). parsers turn the claude or codex JSONL dialect into normalized turns. extract lifts the conclusion and the evidence — files, commands, decisions — into an AnswerCard. render prints the one-screen card; --html also writes unbury-answer.html: the full transcript with an anchor on every turn and every card row deep-linked to its own."
+          "zh": "单进程、四个顺序阶段、零网络。discover 选中当前目录最新一个已结束的会话（--session 可用 id、唯一前缀或文件路径指定，且不受当前目录限制）。parsers 把 claude / codex 各自的 JSONL 方言解析成统一的 turns。extract 提取结论与证据——文件、命令、判断——组装成 AnswerCard。render 打印一屏卡片；--html 额外写出 unbury-answer.html：完整转录、每一轮都有稳定锚点、卡片上每一行都深链到它对应的那一轮。「一趟」名副其实——v0.2.0 起，转录每次运行只读一遍：发现阶段解析过的会话直接复用，不再重读整个文件。",
+          "en": "One process, four sequential stages, no network. discover picks the newest finished session recorded for the current directory (--session overrides with a session id, a unique prefix or a transcript path, reaching across directories). parsers turn the claude or codex JSONL dialect into normalized turns. extract lifts the conclusion and the evidence — files, commands, decisions — into an AnswerCard. render prints the one-screen card; --html also writes unbury-answer.html: the full transcript with an anchor on every turn and every card row deep-linked to its own. One pass, literally — since v0.2.0 the transcript is read exactly once per run: discovery reuses the parse it already performed instead of re-reading the whole file."
         },
         "image": {
           "light": "/assets/presentation/workflow-light.svg",
@@ -311,8 +311,8 @@
       "en": "Extraction is heuristic, not model-backed — that is what keeps unbury zero-config and offline, and why the conclusion is quoted verbatim rather than rewritten."
     },
     {
-      "zh": "各家日志格式没有文档、说变就变。解析器按方言用 fixture 回归测试；解析不了的行只计数、不致命。",
-      "en": "Agent log formats are undocumented and change without notice. Parsers are fixture-tested per dialect, and unparseable lines are counted and skipped, never fatal."
+      "zh": "各家日志格式没有文档、说变就变。解析器按方言用 fixture 回归测试；解析不了的行只计数、不致命。v0.2.0 起，命令行界面与版本一致性也有测试守护。",
+      "en": "Agent log formats are undocumented and change without notice. Parsers are fixture-tested per dialect, and unparseable lines are counted and skipped, never fatal. Since v0.2.0 the command surface and version lockstep are under test as well."
     },
     {
       "zh": "卡片展示放得下的行数，并注明还有多少行没显示；完整的证据表永远在 HTML 视图里。",
