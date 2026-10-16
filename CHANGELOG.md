@@ -4,6 +4,27 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [SemVer](https://semver.org/).
 
+## [0.2.0] — 2026-10-16
+
+Hardening release: each card run now parses its transcript once instead of
+twice, and the command surface and version state are under test.
+
+### m4 — CLI and version contract
+
+- `tests/test_cli.py` covers the command surface in-process through typer's
+  CliRunner over synthetic fixture trees: `--version`, default selection,
+  `--session` across directories, `unbury list --agent` filtering, `--html`
+  output, and the clean failure contracts.
+- `tests/test_version.py` locks the version surfaces in lockstep — the
+  VERSION file, package metadata, `unbury.__version__`, web/site.json's
+  content/implementation versions, and the CHANGELOG heading.
+
+### m5 — parse once
+
+- Discovery caches the parse it already performed for a list row, so
+  `unbury` reads the session transcript once per run instead of twice
+  (`src/unbury/discover.py`).
+
 ## [0.1.0] — 2026-09-11
 
 Initial release: one-command answer cards for finished coding agent sessions.

@@ -11,8 +11,8 @@
   "meta": {
     "visual_profile": "neon-particle",
     "demo_source": "https://github.com/SuperMarioYL/unbury/blob/main/docs/demo-results.json",
-    "content_version": "v0.1.0",
-    "implementation_version": "0.1.0"
+    "content_version": "v0.2.0",
+    "implementation_version": "0.2.0"
   },
   "hero": {
     "eyebrow": {

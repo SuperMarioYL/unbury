@@ -23,7 +23,7 @@ from unbury.htmlview import write_html_view
 from unbury.model import AnswerCard, Evidence, ParsedSession, SessionRef, ToolCall, Turn
 from unbury.render import print_card
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 __all__ = [
     "AnswerCard",
