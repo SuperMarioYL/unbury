@@ -263,6 +263,26 @@ def test_latest_finished_prefers_newest(tmp_path: Path) -> None:
     assert (latest.agent, latest.session_id) == ("codex", "codex-top")
 
 
+def test_card_run_parses_transcript_once(tmp_path: Path, monkeypatch) -> None:
+    """A card run reads the transcript once: discovery parses the file to
+    promote its row, and open_session must reuse that parse instead of
+    re-reading the whole JSONL."""
+    dirs, _, _ = stage_discovery_tree(tmp_path)
+    calls: list[Path] = []
+    real = discover._PARSERS["claude"]
+
+    def counting(path: Path):
+        calls.append(path)
+        return real(path)
+
+    monkeypatch.setitem(discover._PARSERS, "claude", counting)
+    info = discover.latest_finished(dirs=dirs, agents=["claude"])
+    parsed = discover.open_session(info)
+
+    assert parsed.path == info.path
+    assert len(calls) == 1
+
+
 def test_select_session_matches_id_prefix_and_path(tmp_path: Path) -> None:
     dirs, _, _ = stage_discovery_tree(tmp_path)
 

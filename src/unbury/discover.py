@@ -5,8 +5,9 @@ finished when no live process owns it (``parsers.claude``), a Codex rollout
 file when it has been quiescent past a grace period and is not a subagent
 thread (``parsers.codex``). This module merges both agents' finished
 sessions newest-first, filters by working directory, and promotes candidates
-into :class:`SessionInfo` rows. A session file is parsed only when its row
-is actually produced, so listing stays cheap.
+into :class:`SessionInfo` rows. A session file is parsed only when its row is
+actually produced, so listing stays cheap, and the parse is cached on the row
+so a card run reads the transcript once.
 
 Selection matches a ``--session`` reference against the session id, the file
 stem, and the file path; longer prefixes disambiguate, and among equally
@@ -17,7 +18,7 @@ from __future__ import annotations
 
 import heapq
 from collections.abc import Iterator, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -37,7 +38,11 @@ _PREFIX_MATCH = 1
 
 @dataclass
 class SessionInfo:
-    """One finished session as ``unbury list`` shows it."""
+    """One finished session as ``unbury list`` shows it.
+
+    ``parsed`` is the parse discovery performed to build the row, cached so
+    ``open_session`` never re-reads the transcript; treat it as read-only.
+    """
 
     agent: str
     path: Path
@@ -48,6 +53,7 @@ class SessionInfo:
     ended_at: datetime | None
     turns: int
     modified_at: datetime
+    parsed: ParsedSession | None = field(default=None, repr=False, compare=False)
 
 
 @dataclass
@@ -110,7 +116,13 @@ def latest_finished(
 
 
 def open_session(info: SessionInfo) -> ParsedSession:
-    """Parse a listed session into normalized turns, ready for extraction."""
+    """Parse a listed session into normalized turns, ready for extraction.
+
+    Reuses the parse discovery already performed for the row, so a card run
+    reads the transcript once instead of twice.
+    """
+    if info.parsed is not None:
+        return info.parsed
     return _PARSERS[info.agent](info.path)
 
 
@@ -215,6 +227,7 @@ def _promote(candidate: _Candidate) -> SessionInfo:
         ended_at=session.ended_at,
         turns=len(session.turns),
         modified_at=candidate.modified_at,
+        parsed=session,
     )
 
 
