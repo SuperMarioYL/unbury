@@ -52,7 +52,7 @@ unbury 在这些方案中间的位置：
 
 两个值得明说的设计取舍：
 
-- **逐字引用，不复述。** 结论就是 agent 最后那条实质性回答，用启发式原样提取。不调模型、不需要 API key、完全离线——也就不会有"转述走样"。
+- **逐字引用，不复述。** 结论就是 agent 最后那条*实质性*回答，用启发式原样提取——结尾一句「Done.」「Waiting for CI.」不会把它顶掉。不调模型、不需要 API key、完全离线——也就不会有"转述走样"。
 - **跳转链接是产品本体，不是点缀。** 一张说错了结论的卡片比滚屏更糟。所以每一行都带 `路径:行号`，`--html` 再把它变成一次点击。
 
 ## <img src="assets/icons/cpu.svg" width="22" alt="" /> 工作原理
@@ -102,7 +102,7 @@ unbury          # 该目录最新一个已结束会话的答案卡片
 unbury --html   # 同一张卡片，外加带跳转链接的 unbury-answer.html
 ```
 
-没有 API key、没有配置文件、没有常驻进程——unbury 只读取 Claude Code（`~/.claude/projects/`）和 Codex（`~/.codex/sessions/`）本来就写在磁盘上的会话日志。
+没有 API key、没有配置文件、没有常驻进程——unbury 只读取 Claude Code（`~/.claude/projects/`）和 Codex（`~/.codex/sessions/`）本来就写在磁盘上的会话日志。如果 agent 的状态目录被 `CLAUDE_CONFIG_DIR` 或 `CODEX_HOME` 挪走了，unbury 会去那里读。
 
 想改代码的话：
 
@@ -118,7 +118,7 @@ pytest                   # 解析器/提取/视图测试，全部用合成 fixtu
 
 ```bash
 unbury                        # 答案卡片：本目录最新一个已结束会话
-unbury list                   # 本目录记录的已结束会话
+unbury list                   # 本目录最新 20 个已结束会话（还有更早的会明确提示）
 unbury --session 82ed5a79     # 指定会话：id（见 list）、唯一前缀，或转录文件路径
 unbury --agent claude         # 只看 claude | codex；默认两者都看
 unbury --html                 # 同时写出 unbury-answer.html（带链接的转录视图）
@@ -138,7 +138,7 @@ unbury --html                 # 同时写出 unbury-answer.html（带链接的�
 ## <img src="assets/icons/list-check.svg" width="22" alt="" /> 已知局限
 
 - 提取是启发式的，不靠模型——这正是 unbury 能零配置、离线使用的原因，也是结论逐字引用而不重写的原因。
-- 各家日志格式没有文档、说变就变。解析器按方言用 fixture 回归测试；解析不了的行只计数、不致命。
+- 各家日志格式没有文档、说变就变。解析器按方言用 fixture 回归测试；个别读不出的行会被跳过并计数。如果整份转录都读不出来，unbury 会报错并指出文件和行数——而不是给出一张空卡片。
 - 卡片展示放得下的行数，并注明还有多少行没显示；完整的证据表永远在 HTML 视图里。
 
 ## <img src="assets/icons/map.svg" width="22" alt="" /> 路线图

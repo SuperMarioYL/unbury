@@ -46,6 +46,7 @@ carrying the raw script so the transcript keeps the fact that a tool ran.
 from __future__ import annotations
 
 import json
+import os
 import re
 import time
 from collections.abc import Iterator
@@ -55,7 +56,11 @@ from pathlib import Path
 
 from unbury.parsers import ParsedSession, ToolCall, Turn
 
-SESSIONS_DIR = Path.home() / ".codex" / "sessions"
+# Codex keeps its state under $CODEX_HOME when that is set; ~/.codex is the
+# default. Reading the variable here is what lets unbury find rollouts the
+# agent actually wrote instead of reporting an empty backlog.
+CODEX_HOME = Path(os.environ.get("CODEX_HOME") or Path.home() / ".codex")
+SESSIONS_DIR = CODEX_HOME / "sessions"
 
 # A rollout file untouched for this many seconds is treated as finished.
 # Active turns write records frequently but can pause for minutes while a

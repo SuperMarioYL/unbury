@@ -32,8 +32,13 @@ from pathlib import Path
 
 from unbury.parsers import ParsedSession, ToolCall, Turn
 
-PROJECTS_DIR = Path.home() / ".claude" / "projects"
-SESSIONS_DIR = Path.home() / ".claude" / "sessions"
+# Claude Code keeps its state under $CLAUDE_CONFIG_DIR when that is set (used
+# to separate accounts or to relocate state off the home directory); ~/.claude
+# is the default. Reading the variable here is what lets unbury find sessions
+# the agent actually wrote instead of reporting an empty backlog.
+_CONFIG_DIR = Path(os.environ.get("CLAUDE_CONFIG_DIR") or Path.home() / ".claude")
+PROJECTS_DIR = _CONFIG_DIR / "projects"
+SESSIONS_DIR = _CONFIG_DIR / "sessions"
 
 # Text that Claude Code generates rather than the human or the agent:
 # slash-command envelopes, IDE events, task notifications, interrupt notices.

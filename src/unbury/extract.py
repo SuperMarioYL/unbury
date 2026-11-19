@@ -34,6 +34,10 @@ _MIN_FINDING_CHARS = 120
 
 _LINK_RE = re.compile(r"\[([^\]]+)\]\([^)]*\)")
 
+# Markdown characters that can make up a decoration-only line (fence, rule,
+# table separator, emphasis): a line with nothing else is not a headline.
+_DECORATION_CHARS = "`*#>-|_=~ \t"
+
 
 def build_card(session: ParsedSession) -> AnswerCard:
     """Build the answer card for a parsed session."""
@@ -65,11 +69,23 @@ def _session_ref(session: ParsedSession) -> SessionRef:
 
 
 def _conclusion(session: ParsedSession) -> tuple[str, tuple[Path, int] | None]:
-    """The final substantive assistant answer, quoted verbatim."""
+    """The final substantive assistant answer, quoted verbatim.
+
+    Agents often close with a one-line acknowledgement ("Done.", "Waiting for
+    CI.") after the answer is already stated. That line is not the conclusion:
+    the last text that reads as a finding wins, and when nothing qualifies the
+    last text is still the honest one.
+    """
+    fallback: tuple[str, tuple[Path, int]] | None = None
     for turn in reversed(session.turns):
-        if turn.role == "assistant" and turn.text:
-            return turn.text, (session.path, turn.line)
-    return "", None
+        if turn.role != "assistant" or not turn.text:
+            continue
+        ref = (session.path, turn.line)
+        if _is_finding(turn.text):
+            return turn.text, ref
+        if fallback is None:
+            fallback = (turn.text, ref)
+    return fallback if fallback is not None else ("", None)
 
 
 def _evidence(
@@ -88,9 +104,11 @@ def _evidence(
             and turn.line != conclusion_line
             and _is_finding(turn.text)
         ):
-            decisions.append(
-                Evidence("decision", _headline(turn.text), (session.path, turn.line))
-            )
+            headline = _headline(turn.text)
+            if headline:
+                decisions.append(
+                    Evidence("decision", headline, (session.path, turn.line))
+                )
         for call in turn.tool_calls:
             if call.name in FILE_EDIT_TOOLS:
                 target = call.input.get("file_path") or call.input.get("notebook_path")
@@ -133,13 +151,22 @@ def _is_finding(text: str) -> bool:
 
 
 def _headline(text: str, limit: int = 90) -> str:
-    line = next(
-        (source.strip() for source in text.splitlines() if source.strip()), ""
-    )
-    line = line.lstrip("#").strip()
-    line = _LINK_RE.sub(r"\1", line)
-    line = line.replace("**", "").replace("`", "").strip()
-    return _shorten(line, limit)
+    """The first line that carries words, with Markdown decoration removed.
+
+    A finding can open with a fenced block, a rule or a table separator; those
+    lines are decoration, not a label, so they are skipped rather than stripped
+    down to an empty summary. Returns ``""`` when nothing usable remains.
+    """
+    for source in text.splitlines():
+        candidate = source.strip()
+        if not candidate or not candidate.strip(_DECORATION_CHARS):
+            continue
+        candidate = candidate.lstrip("#").strip()
+        candidate = _LINK_RE.sub(r"\1", candidate)
+        candidate = candidate.replace("**", "").replace("`", "").strip()
+        if candidate:
+            return _shorten(candidate, limit)
+    return ""
 
 
 def _shorten(text: str, limit: int) -> str:

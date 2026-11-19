@@ -52,7 +52,7 @@ unbury's place among the alternatives:
 
 Two decisions worth stating outright:
 
-- **Verbatim, not re-summarized.** The conclusion is the agent's final answer, extracted as-is by heuristics. No model call, no API key, works entirely offline — and no summary drift.
+- **Verbatim, not re-summarized.** The conclusion is the agent's final *substantive* answer, extracted as-is by heuristics — a closing acknowledgement ("Done.", "Waiting for CI.") does not take its place. No model call, no API key, works entirely offline — and no summary drift.
 - **Jump-links are the product, not garnish.** A card that misstates the conclusion is worse than scrollback. That is why every row carries its `path:line`, and why `--html` turns each into a click.
 
 ## <img src="assets/icons/cpu.svg" width="22" alt="" /> How it works
@@ -102,7 +102,7 @@ unbury          # the answer card for its newest finished session
 unbury --html   # same card, plus unbury-answer.html with jump-links
 ```
 
-No API key, no settings file, no daemon — unbury only reads the session logs Claude Code (`~/.claude/projects/`) and Codex (`~/.codex/sessions/`) already write to disk.
+No API key, no settings file, no daemon — unbury only reads the session logs Claude Code (`~/.claude/projects/`) and Codex (`~/.codex/sessions/`) already write to disk. If an agent's state was relocated with `CLAUDE_CONFIG_DIR` or `CODEX_HOME`, unbury reads it from there.
 
 To hack on it instead:
 
@@ -118,7 +118,7 @@ The entire tuning surface is one command and three flags:
 
 ```bash
 unbury                        # answer card: newest finished session in this directory
-unbury list                   # the finished sessions recorded for this directory
+unbury list                   # the newest 20 finished sessions here (says when older ones exist)
 unbury --session 82ed5a79     # pick one: session id (see list), unique prefix, or transcript path
 unbury --agent claude         # only claude | codex; default: both
 unbury --html                 # also write unbury-answer.html (linked transcript view)
@@ -138,7 +138,7 @@ More agents ride the same seam: a parser is one module that turns a dialect JSON
 ## <img src="assets/icons/list-check.svg" width="22" alt="" /> Limitations
 
 - Extraction is heuristic, not model-backed — that is what keeps unbury zero-config and offline, and why the conclusion is quoted verbatim rather than rewritten.
-- Agent log formats are undocumented and change without notice. Parsers are fixture-tested per dialect, and unparseable lines are counted and skipped, never fatal.
+- Agent log formats are undocumented and change without notice. Parsers are fixture-tested per dialect, and stray unreadable lines are skipped and counted. A transcript in which nothing is readable is an error naming the file and the line count — not an empty card.
 - The card shows the rows that fit and says how many more exist; the full evidence table is always in the HTML view.
 
 ## <img src="assets/icons/map.svg" width="22" alt="" /> Roadmap

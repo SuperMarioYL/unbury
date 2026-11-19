@@ -4,6 +4,43 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [SemVer](https://semver.org/).
 
+## [0.3.0] — 2026-11-20
+
+Hardening release: the card reads the answer the agent actually gave, a
+transcript that cannot be read is an error, and discovery follows relocated
+agent homes.
+
+### m6 — the substantive conclusion
+
+- The conclusion is the last assistant text that reads as a substantive
+  answer. A one-line acknowledgement after the answer ("Done.", "Waiting for
+  CI.") no longer replaces it; when no text qualifies, the last text is still
+  used (`src/unbury/extract.py`).
+
+### m7 — decision labels
+
+- A finding that opens with a fenced block is labelled by its first content
+  line instead of producing a blank evidence row; text made only of Markdown
+  decoration produces no row at all.
+
+### m8 — unreadable transcripts
+
+- A discovered transcript whose lines are all unreadable now exits 1 naming
+  the transcript and the unreadable line count, instead of printing an empty
+  card and exiting 0. A session that parses cleanly but carries no turns still
+  renders its card.
+
+### m9 — relocated agent homes
+
+- Session roots honour `CLAUDE_CONFIG_DIR` and `CODEX_HOME`, with `~/.claude`
+  and `~/.codex` as the defaults, so an agent whose state was relocated is
+  still found.
+
+### m10 — list disclosure
+
+- `unbury list` says when older finished sessions exist beyond the newest 20
+  and that `--session` still reaches them.
+
 ## [0.2.0] — 2026-10-16
 
 Hardening release: each card run now parses its transcript once instead of

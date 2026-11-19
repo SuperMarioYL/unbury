@@ -219,3 +219,64 @@ def test_example_session_renders_end_to_end(tmp_path: Path) -> None:
     anchors = set(re.findall(r'id="L(\d+)"', document))
     linked = set(re.findall(r'href="#L(\d+)"', document))
     assert linked <= anchors
+
+
+# --- v0.3.0: conclusion and decision hygiene --------------------------------------
+
+_ANSWER = (
+    "Fixed the loader: the duplicated model id came from the merged catalog, so the "
+    "second definition shadowed the first and /v1/models resolved to a model that no "
+    "longer existed. The loader now rejects duplicate ids at import time."
+)
+
+
+def _session(tmp_path: Path, texts: list[tuple[int, str]]) -> ParsedSession:
+    return ParsedSession(
+        path=tmp_path / "s.jsonl",
+        agent="claude",
+        turns=[
+            Turn(role="user", line=1, text="why does /v1/models return 500?"),
+            *(Turn(role="assistant", line=line, text=text) for line, text in texts),
+        ],
+    )
+
+
+def test_trailing_acknowledgement_does_not_replace_the_answer(tmp_path: Path) -> None:
+    """A closing "Done." is not the conclusion when a substantive answer came first."""
+    session = _session(tmp_path, [(4, _ANSWER), (6, "Done.")])
+
+    card = extract.build_card(session)
+
+    assert card.conclusion == _ANSWER
+    assert card.conclusion_ref == (session.path, 4)
+    assert [row.summary for row in card.evidence] == []
+
+
+def test_short_only_session_still_yields_its_last_text(tmp_path: Path) -> None:
+    """Nothing substantive anywhere: the last text is still the honest conclusion."""
+    session = _session(tmp_path, [(4, "Looking at the loader now."), (6, "Fixed.")])
+
+    card = extract.build_card(session)
+
+    assert card.conclusion == "Fixed."
+    assert card.conclusion_ref == (session.path, 6)
+
+
+def test_decision_headline_skips_markdown_fences(tmp_path: Path) -> None:
+    """A finding that opens with a fence is labelled by its first content line."""
+    body = "```\nprint('hi')\n```"
+    session = _session(tmp_path, [(4, body), (6, _ANSWER)])
+
+    card = extract.build_card(session)
+
+    decisions = [row for row in card.evidence if row.kind == "decision"]
+    assert [(row.summary, row.ref[1]) for row in decisions] == [("print('hi')", 4)]
+
+
+def test_no_evidence_row_has_an_empty_summary(tmp_path: Path) -> None:
+    """Decoration-only findings produce no row rather than a blank one."""
+    session = _session(tmp_path, [(4, "```\n```"), (6, _ANSWER)])
+
+    card = extract.build_card(session)
+
+    assert card.evidence == []

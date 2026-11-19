@@ -229,3 +229,81 @@ def test_unknown_agent_is_a_usage_error(staged: dict[str, Path]) -> None:
 
     assert result.exit_code != 0
     assert "Traceback" not in result.output
+
+
+# --- v0.3.0: parse failures and listing disclosure --------------------------------
+
+
+def _stage_projects(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, records: str) -> Path:
+    """One claude project dir holding a single transcript with raw content."""
+    proj = tmp_path / "work" / "proj"
+    proj.mkdir(parents=True)
+    projects = tmp_path / "projects"
+    transcript = projects / str(proj.resolve()).replace("/", "-") / "only.jsonl"
+    transcript.parent.mkdir(parents=True)
+    transcript.write_text(records, encoding="utf-8")
+    touch(transcript, time.time() - 3600)
+    monkeypatch.setattr(claude, "PROJECTS_DIR", projects)
+    monkeypatch.setattr(claude, "SESSIONS_DIR", tmp_path / "sessions")
+    monkeypatch.setattr(codex, "SESSIONS_DIR", tmp_path / "codex")
+    monkeypatch.chdir(proj)
+    return transcript
+
+
+def test_unparseable_transcript_fails_cleanly(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """A wholly unreadable transcript is a failure, not an empty answer card."""
+    _stage_projects(tmp_path, monkeypatch, "not json\nnor this\n")
+
+    result = runner.invoke(app, [])
+
+    assert result.exit_code == 1
+    assert "unreadable" in result.output
+    assert "only.jsonl" in result.output
+    assert "Traceback" not in result.output
+
+
+def test_cleanly_empty_session_still_prints_the_card(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """A transcript that parses but carries no turns is still a card, not an error."""
+    _stage_projects(
+        tmp_path, monkeypatch, json.dumps({"type": "file-history-snapshot"}) + "\n"
+    )
+
+    result = runner.invoke(app, [])
+
+    assert result.exit_code == 0
+    assert "without a narrative answer" in result.output
+
+
+def test_list_discloses_that_more_sessions_exist(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """21 finished sessions: 20 rows plus a footer; 20 sessions: no footer."""
+    proj = tmp_path / "work" / "proj"
+    proj.mkdir(parents=True)
+    projects = tmp_path / "projects"
+    project_dir = projects / str(proj.resolve()).replace("/", "-")
+    base = time.time() - 10_000
+    record = {"type": "user", "origin": {"kind": "human"},
+              "message": {"role": "user", "content": "hi"}}
+    for i in range(21):
+        path = write_jsonl(project_dir / f"sess-{i:02d}.jsonl", [record])
+        touch(path, base + i)
+    monkeypatch.setattr(claude, "PROJECTS_DIR", projects)
+    monkeypatch.setattr(claude, "SESSIONS_DIR", tmp_path / "sessions")
+    monkeypatch.setattr(codex, "SESSIONS_DIR", tmp_path / "codex")
+    monkeypatch.chdir(proj)
+
+    crowded = runner.invoke(app, ["list"])
+    assert crowded.exit_code == 0
+    assert "older finished sessions exist" in crowded.output
+    assert "sess-20" in crowded.output  # newest kept
+    assert "sess-00" not in crowded.output  # oldest beyond the cap
+
+    (project_dir / "sess-00.jsonl").unlink()
+    roomy = runner.invoke(app, ["list"])
+    assert roomy.exit_code == 0
+    assert "older finished sessions exist" not in roomy.output

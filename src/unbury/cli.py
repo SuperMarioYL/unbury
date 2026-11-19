@@ -97,9 +97,15 @@ def list_(
     ] = None,
 ) -> None:
     """List the finished sessions recorded for this directory, newest first."""
-    rows = discover.list_sessions(Path.cwd(), agents=_agents(agent))
+    # Ask for one row past the cap: it is the cheapest way to know whether the
+    # table below is the whole backlog or only its newest page.
+    rows = discover.list_sessions(
+        Path.cwd(), agents=_agents(agent), limit=discover.DEFAULT_LIMIT + 1
+    )
     if not rows:
         _fail(f"no finished sessions found for {Path.cwd()}")
+    has_older = len(rows) > discover.DEFAULT_LIMIT
+    rows = rows[: discover.DEFAULT_LIMIT]
     table = Table(box=None, header_style="bold", pad_edge=False)
     table.add_column("agent", style="cyan", no_wrap=True)
     table.add_column("session", style="bold", no_wrap=True)
@@ -112,7 +118,14 @@ def list_(
             str(row.turns),
             _when(row.modified_at),
         )
-    Console().print(table)
+    console = Console()
+    console.print(table)
+    if has_older:
+        console.print(
+            f"the newest {discover.DEFAULT_LIMIT} are shown — older finished sessions "
+            "exist; `unbury --session <id|prefix|path>` still reaches them",
+            style="dim",
+        )
 
 
 def _card(session: str | None, agent: Agent | None, html: bool) -> int:
@@ -126,6 +139,14 @@ def _card(session: str | None, agent: Agent | None, html: bool) -> int:
         if info is None:
             _fail(f"no finished sessions found for {Path.cwd()}")
     parsed = discover.open_session(info)
+    if not parsed.turns and parsed.unparsed_lines:
+        # The transcript was discovered as finished but nothing in it could be
+        # read: reporting an empty card as a successful run would hide a total
+        # parse failure behind a plausible-looking answer.
+        _fail(
+            f"nothing parseable in {parsed.path} — "
+            f"{parsed.unparsed_lines} unreadable line(s); the log format may have changed"
+        )
     card = extract.build_card(parsed)
     render.print_card(card)
     if html:

@@ -11,8 +11,9 @@
   "meta": {
     "visual_profile": "neon-particle",
     "demo_source": "https://github.com/SuperMarioYL/unbury/blob/main/docs/demo-results.json",
-    "content_version": "v0.2.0",
-    "implementation_version": "0.2.0"
+    "content_version": "v0.3.0",
+    "implementation_version": "0.3.0",
+    "generated_at": "2026-11-20"
   },
   "hero": {
     "eyebrow": {
@@ -53,8 +54,8 @@
         "en": "Verbatim, not re-summarized"
       },
       "body": {
-        "zh": "结论就是 agent 最后那条实质性回答，用启发式原样提取——不调模型、不需要 API key、完全离线，也就不存在复述走样。agent 当时说了什么，你就读到什么。",
-        "en": "The conclusion is the agent's final answer, extracted as-is by heuristics — no model call, no API key, works entirely offline, and no summary drift. What the agent actually said is what you read."
+        "zh": "结论就是 agent 最后那条实质性回答，用启发式原样提取——结尾一句「Done.」不会把它顶掉。不调模型、不需要 API key、完全离线，也就不存在复述走样。agent 当时说了什么，你就读到什么。",
+        "en": "The conclusion is the agent's final substantive answer, extracted as-is by heuristics — a closing acknowledgement (\"Done.\") does not take its place. No model call, no API key, works entirely offline, and no summary drift. What the agent actually said is what you read."
       }
     },
     {
@@ -150,8 +151,8 @@
           "en": "What reads in today"
         },
         "body": {
-          "zh": "Claude Code 会话读取自 ~/.claude/projects/<project>/<id>.jsonl——含会话标题、工具调用，以及人工输入与系统注入消息的过滤；Codex rollout 读取自 ~/.codex/sessions/**/rollout-*.jsonl——文件修改从 exec 入参里的 apply_patch 字符串中恢复。两者走的是同一条解析缝：一个解析器就是一个把方言 JSONL 变成统一 turns 的模块（parse_session(path) -> ParsedSession），Astra、Gemini CLI、Cursor 的支持将来也落在这里——是路线图，不是已发布。Python 3.12+ 下用 uv 或 pipx 安装；仓库还自带两条合成示例会话，没有任何 agent 历史也能跑通。",
-          "en": "Claude Code sessions are read from ~/.claude/projects/<project>/<id>.jsonl — with session titles, tool calls, and human-vs-injected message filtering. Codex rollouts from ~/.codex/sessions/**/rollout-*.jsonl — with file edits recovered from apply_patch strings inside exec inputs. Both run through the same parser seam: a parser is one module that turns a dialect JSONL file into normalized turns (parse_session(path) -> ParsedSession), which is exactly where Astra, Gemini CLI and Cursor support will land — roadmap, not shipped. Install with uv or pipx on Python 3.12+, or try the two synthetic example sessions bundled in the repo, no agent history required."
+        "zh": "Claude Code 会话读取自 ~/.claude/projects/<project>/<id>.jsonl（设置了 CLAUDE_CONFIG_DIR 时从其 projects/ 读取）——含会话标题、工具调用，以及人工输入与系统注入消息的过滤；Codex rollout 读取自 ~/.codex/sessions/**/rollout-*.jsonl（设置了 CODEX_HOME 时从其 sessions/ 读取）——文件修改从 exec 入参里的 apply_patch 字符串中恢复。两者走的是同一条解析缝：一个解析器就是一个把方言 JSONL 变成统一 turns 的模块（parse_session(path) -> ParsedSession），Astra、Gemini CLI、Cursor 的支持将来也落在这里——是路线图，不是已发布。Python 3.12+ 下用 uv 或 pipx 安装；仓库还自带两条合成示例会话，没有任何 agent 历史也能跑通。",
+        "en": "Claude Code sessions are read from ~/.claude/projects/<project>/<id>.jsonl (or CLAUDE_CONFIG_DIR/projects when that is set) — with session titles, tool calls, and human-vs-injected message filtering. Codex rollouts from ~/.codex/sessions/**/rollout-*.jsonl (or CODEX_HOME/sessions when that is set) — with file edits recovered from apply_patch strings inside exec inputs. Both run through the same parser seam: a parser is one module that turns a dialect JSONL file into normalized turns (parse_session(path) -> ParsedSession), which is exactly where Astra, Gemini CLI and Cursor support will land — roadmap, not shipped. Install with uv or pipx on Python 3.12+, or try the two synthetic example sessions bundled in the repo, no agent history required."
         },
         "image": {
           "light": "/assets/presentation/integrations-light.svg",
@@ -185,8 +186,8 @@
           "en": "Finished, never live"
         },
         "body": {
-          "zh": "unbury 永远不会去卡片化你正在跑的会话。Claude Code 会话在没有存活进程持有它时（按 pid 判断）算结束；Codex 的 rollout 文件静默满五分钟、且不是子 agent 线程时算结束。解析不了的行只计数、不致命——各家日志格式没有文档、说变就变，解析器按方言用 fixture 回归测试。",
-          "en": "unbury never cards the session you are currently in. A Claude Code session counts as finished when no running process owns it (checked by pid); a Codex rollout after its file has been quiet for five minutes and it is not a subagent thread. Unparseable lines are counted and skipped, never fatal — agent log formats are undocumented and change without notice, and parsers are fixture-tested per dialect."
+          "zh": "unbury 永远不会去卡片化你正在跑的会话。Claude Code 会话在没有存活进程持有它时（按 pid 判断）算结束；Codex 的 rollout 文件静默满五分钟、且不是子 agent 线程时算结束。个别读不出的行只跳过并计数：各家日志格式没有文档、说变就变，解析器按方言用 fixture 回归测试；整份转录都读不出时直接报错并指出文件。",
+          "en": "unbury never cards the session you are currently in. A Claude Code session counts as finished when no running process owns it (checked by pid); a Codex rollout after its file has been quiet for five minutes and it is not a subagent thread. Stray unreadable lines are skipped and counted — agent log formats are undocumented and change without notice, and parsers are fixture-tested per dialect; a transcript in which nothing is readable is an error naming the file."
         },
         "code": "unbury --agent codex"
       },
@@ -301,7 +302,7 @@
           "zh": "翻翻存量会话",
           "en": "Browse the backlog"
         },
-        "code": "unbury list                  # finished sessions for this directory\nunbury --session 82ed5a79    # session id, unique prefix, or transcript path\nunbury --agent codex         # claude | codex; default: both"
+        "code": "unbury list                  # the newest 20 here; it says when older ones exist\nunbury --session 82ed5a79    # session id, unique prefix, or transcript path\nunbury --agent codex         # claude | codex; default: both"
       }
     ]
   },
@@ -311,16 +312,16 @@
       "en": "Extraction is heuristic, not model-backed — that is what keeps unbury zero-config and offline, and why the conclusion is quoted verbatim rather than rewritten."
     },
     {
-      "zh": "各家日志格式没有文档、说变就变。解析器按方言用 fixture 回归测试；解析不了的行只计数、不致命。v0.2.0 起，命令行界面与版本一致性也有测试守护。",
-      "en": "Agent log formats are undocumented and change without notice. Parsers are fixture-tested per dialect, and unparseable lines are counted and skipped, never fatal. Since v0.2.0 the command surface and version lockstep are under test as well."
+      "zh": "各家日志格式没有文档、说变就变。解析器按方言用 fixture 回归测试；个别读不出的行会被跳过并计数，整份转录都读不出时 unbury 会报错并指出文件，而不是给出一张空卡片。v0.2.0 起，命令行界面与版本一致性也有测试守护。",
+      "en": "Agent log formats are undocumented and change without notice. Parsers are fixture-tested per dialect; stray unreadable lines are skipped and counted, and a transcript in which nothing is readable is an error naming the file rather than an empty card. Since v0.2.0 the command surface and version lockstep are under test as well."
     },
     {
       "zh": "卡片展示放得下的行数，并注明还有多少行没显示；完整的证据表永远在 HTML 视图里。",
       "en": "The card shows the rows that fit and says how many more exist; the full evidence table is always in the HTML view."
     },
     {
-      "zh": "v0.1 只读取 Claude Code 与 Codex 会话。Astra、Gemini CLI、Cursor 的解析器在路线图上——解析器接口已经有了，解析器还没有。",
-      "en": "v0.1 reads Claude Code and Codex sessions only. Astra, Gemini CLI and Cursor parsers are roadmap items — the parser interface is there, the parsers are not."
+      "zh": "unbury 只读取 Claude Code 与 Codex 会话。Astra、Gemini CLI、Cursor 的解析器在路线图上——解析器接口已经有了，解析器还没有。",
+      "en": "unbury reads Claude Code and Codex sessions only. Astra, Gemini CLI and Cursor parsers are roadmap items — the parser interface is there, the parsers are not."
     },
     {
       "zh": "没有 Web UI、云同步、实时挂接、流式输出或跨会话搜索：unbury 读取已结束的会话，打印卡片。",

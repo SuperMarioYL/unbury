@@ -9,6 +9,7 @@ local sessions when they exist.
 
 from __future__ import annotations
 
+import importlib
 import json
 import os
 import subprocess
@@ -323,3 +324,39 @@ def test_real_local_sessions_smoke() -> None:
     session = claude.parse_session(finished[0])
     assert session.agent == "claude"
     assert session.path == finished[0]
+
+
+# --- v0.3.0: relocated agent homes ---------------------------------------------
+
+
+def test_claude_home_follows_claude_config_dir(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """$CLAUDE_CONFIG_DIR relocates the logs Claude Code already writes."""
+    relocated = tmp_path / "claude-config"
+    monkeypatch.setenv("CLAUDE_CONFIG_DIR", str(relocated))
+    try:
+        importlib.reload(claude)
+        assert claude.PROJECTS_DIR == relocated / "projects"
+        assert claude.SESSIONS_DIR == relocated / "sessions"
+    finally:
+        monkeypatch.delenv("CLAUDE_CONFIG_DIR")
+        importlib.reload(claude)
+
+    assert claude.PROJECTS_DIR == Path.home() / ".claude" / "projects"
+
+
+def test_codex_home_follows_codex_home(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """$CODEX_HOME relocates the rollout tree Codex already writes."""
+    relocated = tmp_path / "codex-home"
+    monkeypatch.setenv("CODEX_HOME", str(relocated))
+    try:
+        importlib.reload(codex)
+        assert codex.SESSIONS_DIR == relocated / "sessions"
+    finally:
+        monkeypatch.delenv("CODEX_HOME")
+        importlib.reload(codex)
+
+    assert codex.SESSIONS_DIR == Path.home() / ".codex" / "sessions"
